@@ -110,8 +110,25 @@ SYNAPSENEW_DIR=... bash scripts/push_results.sh
   adapter plumbing needed downstream. `*_adapter.pth` files keep optimizer
   state + unmerged adapters for exact continuation.
 
-## Results
+## Results (overnight run, 2026-10-30 → 31)
 
-See `reports/MORNING_REPORT.md` (per-source val loss, bench lift, DPO accuracy,
-LM-drift guard). Reference numbers from the original full-FT SFT (v3, 15
-sources, 2938 steps, A100-class): overall val 2.74 (pretrain) → **1.15** (SFT).
+Run on the laptop's RTX 5080 (16 GB), everything from the Drive pretrain
+checkpoint. SFT = 1200 steps / 6.1h; DPO = 2 epochs / 1.6h.
+
+| metric | Pretrain | **synapsenew SFT** | **synapsenew SFT+DPO** | Reference v3 full-FT (A100) |
+|---|---|---|---|---|
+| Val loss (15-source, overall) | 2.746 | **1.248** (15/15 sources ↑) | 1.315² | 1.150 |
+| Chat bench (49 items, 40 graded) | 32% | **70%** (28/40) | **75%** (30/40) | 70% (28/40) |
+| DPO val preference accuracy | — | — | **0.669** | — |
+| LM-drift guard (tulu3/nr/creative) during DPO | — | 2.260 | 2.268 (+0.008) | — |
+
+¹ LoRA vs the reference's full fine-tune; the laptop run ties the A100
+reference on the chat bench (and leads it on multi-step reasoning 100% vs 50%,
+multi-turn 67% vs 33%, factual_history 100% vs 0%) while sitting ~8% behind on
+val loss (expected: 41% of the steps, LoRA, 1/6 of the hardware).
+² DPO optimizes preference margins, not LM loss: bench improved +5 pts and the
+drift guard barely moved; val loss rises modestly on format/NLI-style sources.
+Best DPO checkpoint (val_acc 0.669) is `dpo_best.pth`.
+
+Full narratives: `reports/MORNING_REPORT.md`, `reports/samples_*.md`,
+`reports/bench_*/`; checkpoints synced to `gdrive:synapsenew/checkpoints/`.
