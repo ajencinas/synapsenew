@@ -112,12 +112,15 @@ def collate_prompt_completion(pairs):
     n = len(seqs)
     input_ids = torch.full((n, max_len), PAD_ID, dtype=torch.long)
     attn = torch.zeros((n, max_len), dtype=torch.long)
-    mask = torch.zeros((n, max_len), dtype=torch.bool)
+    # width max_len-1: position i predicts token i+1, so only the first L-1
+    # positions can contribute (logits[:, :-1] is width max_len-1)
+    mask = torch.zeros((n, max_len - 1), dtype=torch.bool)
     for i, (s, m) in enumerate(zip(seqs, masks)):
         L = len(s)
         input_ids[i, :L] = torch.tensor(s, dtype=torch.long)
         attn[i, :L] = 1
-        mask[i, :L - 1] = torch.tensor(m[1:], dtype=torch.bool)  # position i predicts i+1
+        if L > 1:
+            mask[i, :L - 1] = torch.tensor(m[1:], dtype=torch.bool)  # position i predicts i+1
     return input_ids, attn, mask
 
 
