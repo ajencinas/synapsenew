@@ -43,6 +43,10 @@ MODELS = [
     ("Reference v3 full-FT", os.environ.get(
         "REF_V3_SFT_BEST", os.path.join(CKPT_DIR, "ref_v3_sft_best.pth")),
      "original A100 full fine-tune · 2938 steps · bench 70%"),
+    ("Soup: v3 + SFT (50/50)", os.path.join(CKPT_DIR, "soup_v3_ours_a50.pth"),
+     "weight average · val 1.155 · bench 65%"),
+    ("synapsenew big-LoRA SFT", os.path.join(CKPT_DIR, "sft_best_biglora.pth"),
+     "LoRA r=256 · 2500 steps · max local"),
 ]
 
 GEN_CFG = {"max_tokens": 200, "temperature": 1.0, "top_k": 1, "top_p": 1.0,

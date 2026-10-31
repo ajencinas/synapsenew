@@ -70,10 +70,16 @@ RESUME        = os.environ.get("SFT_RESUME", "0") == "1"
 DEADLINE_TS   = float(os.environ.get("SFT_DEADLINE_TS", 0))  # 0 = no deadline
 SEED          = 1337
 
-LATEST_PATH  = os.path.join(CKPT_DIR, "sft_latest.pth")
-BEST_PATH    = os.path.join(CKPT_DIR, "sft_best.pth")
-ADAPTER_PATH = os.path.join(CKPT_DIR, "sft_adapter.pth")
-STATUS_PATH  = os.path.join(REPORT_DIR, "sft_status.json")
+# Output naming: the default paths are the original run; a tag keeps a second
+# experiment (e.g. big-LoRA) from clobbering the first one's checkpoints.
+TAG           = os.environ.get("SFT_TAG", "")
+_LATEST_BASE  = os.environ.get("SFT_LATEST_NAME", f"sft_latest{'_'+TAG if TAG else ''}.pth")
+_BEST_BASE    = os.environ.get("SFT_BEST_NAME", f"sft_best{'_'+TAG if TAG else ''}.pth")
+_ADPT_BASE    = os.environ.get("SFT_ADAPTER_NAME", f"sft_adapter{'_'+TAG if TAG else ''}.pth")
+LATEST_PATH  = os.path.join(CKPT_DIR, _LATEST_BASE)
+BEST_PATH    = os.path.join(CKPT_DIR, _BEST_BASE)
+ADAPTER_PATH = os.path.join(CKPT_DIR, _ADPT_BASE)
+STATUS_PATH  = os.path.join(REPORT_DIR, f"sft_status{'_'+TAG if TAG else ''}.json")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -289,7 +295,7 @@ def main():
                     save_adapter(ADAPTER_PATH, model, optimizer, curr_step,
                                  eval_history, best_val, baseline_eval)
                     print(f"  [best] overall val {best_val:.4f} → sft_best.pth")
-                write_json(os.path.join(REPORT_DIR, "sft_eval_history.json"),
+                write_json(os.path.join(REPORT_DIR, f"sft_eval_history{'_'+TAG if TAG else ''}.json"),
                            {"history": eval_history, "baseline": baseline_eval,
                             "steps": SFT_STEPS})
 
@@ -333,7 +339,7 @@ def main():
                  "baseline_eval": baseline_eval, "eval_history": eval_history,
                  "stopped_early": stopped_early})
     # adapter file must reflect the FINAL model (it may differ from best)
-    write_json(os.path.join(REPORT_DIR, "sft_training_latest.json"), {
+    write_json(os.path.join(REPORT_DIR, f"sft_training_latest{'_'+TAG if TAG else ''}.json"), {
         "stage": "sft", "mode": "lora", "tokenization_id": tok_id,
         "curr_step": curr_step, "total_steps": SFT_STEPS, "stopped_early": stopped_early,
         "hyperparameters": {"micro_batch": BATCH_SIZE, "grad_accum": GRAD_ACCUM_STEPS,
