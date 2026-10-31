@@ -1,0 +1,13 @@
+# checkpoints, data, logs, reports stay out of git (they live in $SYNAPSENEW_DIR
+# / Google Drive; the repo keeps symlinks to the workspace for convenience)
+*.pth
+*.pt
+*.partial
+__pycache__/
+*.pyc
+/data
+/checkpoints
+/logs
+/reports
+/results
+.pytest_cache/
