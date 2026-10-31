@@ -135,20 +135,33 @@ def shifted_ce(logits, labels, vocab_size, reduction):
 @torch.no_grad()
 def eval_source(model, val_examples, vocab_size, cap=0, batch_size=8, device="cuda"):
     """Token-weighted mean response-token loss; `cap` limits examples for
-    faster in-training evals (0 = all)."""
+    faster in-training evals (0 = all).  Gradient checkpointing must be OFF for
+    evals: it disables inference_mode-compatible no-grad paths and leaves a
+    graph in memory, which OOMs on a full VRAM budget."""
+    was_training = model.training
     model.eval()
-    examples = val_examples[:cap] if cap else val_examples
-    total_loss, total_tokens = 0.0, 0
-    for start in range(0, len(examples), batch_size):
-        input_ids, labels = collate(examples[start:start + batch_size])
-        input_ids, labels = input_ids.to(device), labels.to(device)
-        with torch.amp.autocast("cuda", dtype=torch.bfloat16):
-            logits = model(input_ids)
-            loss = shifted_ce(logits, labels, vocab_size, reduction="sum")
-        total_loss += loss.item()
-        total_tokens += int((labels[:, 1:] != IGNORE_INDEX).sum().item())
-    model.train()
-    return total_loss / total_tokens if total_tokens else float("nan")
+    # raw module: torch.compile wrappers don't expose our custom attribute
+    raw = getattr(model, "_orig_mod", model)
+    was_ckpt = getattr(raw, "gradient_checkpointing", False)
+    if was_ckpt:
+        raw.gradient_checkpointing = False
+    try:
+        examples = val_examples[:cap] if cap else val_examples
+        total_loss, total_tokens = 0.0, 0
+        for start in range(0, len(examples), batch_size):
+            input_ids, labels = collate(examples[start:start + batch_size])
+            input_ids, labels = input_ids.to(device), labels.to(device)
+            with torch.amp.autocast("cuda", dtype=torch.bfloat16):
+                logits = model(input_ids)
+                loss = shifted_ce(logits, labels, vocab_size, reduction="sum")
+            total_loss += loss.item()
+            total_tokens += int((labels[:, 1:] != IGNORE_INDEX).sum().item())
+        return total_loss / total_tokens if total_tokens else float("nan")
+    finally:
+        if was_ckpt:
+            raw.gradient_checkpointing = True
+        if was_training:
+            model.train()
 
 
 def eval_all(model, val_by_source, vocab_size, cap=0, batch_size=8, device="cuda"):

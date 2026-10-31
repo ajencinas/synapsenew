@@ -131,6 +131,20 @@ def status_update(**kw):
         print(f"[status] write failed: {e}")
 
 
+def _grad_ckpt_enabled(model):
+    return getattr(getattr(model, "_orig_mod", model), "gradient_checkpointing", False)
+
+
+def _safe_eval(model, val_by_source, vocab_size, cap):
+    """Eval with memory headroom: clear the caching allocator, drop to a small
+    micro-batch, then restore. Prevents the periodic eval from OOMing on a
+    laptop where training already sits near the VRAM limit."""
+    if device.type == "cuda":
+        torch.cuda.empty_cache()
+    return eval_all(model, val_by_source, vocab_size, cap=cap,
+                    batch_size=2, device=device)
+
+
 def main():
     t_start = time.time()
     torch.manual_seed(SEED)
@@ -278,8 +292,7 @@ def main():
 
             if not PROBE and curr_step % EVAL_EVERY == 0:
                 t_e = time.time()
-                val = eval_all(model, val_by_source, vocab_size,
-                               cap=EVAL_CAP, device=device)
+                val = _safe_eval(model, val_by_source, vocab_size, EVAL_CAP)
                 val["step"] = curr_step
                 eval_history.append(val)
                 print(f"  [eval] step {curr_step} overall={val['overall']:.4f} "
@@ -320,7 +333,7 @@ def main():
     # ---- final: full eval (uncapped) + durable saves ----
     stopped_early = stopped_early or "budget complete"
     print(f"\n[done] {stopped_early}; final full eval (uncapped val)…")
-    val_full = eval_all(model, val_by_source, vocab_size, cap=0, device=device)
+    val_full = _safe_eval(model, val_by_source, vocab_size, 0)
     val_full["step"] = curr_step
     eval_history.append(val_full)
     print("  [final] " + " ".join(f"{k}={v:.4f}" for k, v in val_full.items()))
