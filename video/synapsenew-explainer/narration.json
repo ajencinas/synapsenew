@@ -1,0 +1,38 @@
+[
+  {
+    "id": "hook",
+    "text": "Ask a language model a simple question. The difference between a base model and a trained one is immediately visible."
+  },
+  {
+    "id": "tokens",
+    "text": "First, text becomes token IDs. Synapse uses a sixty-four-thousand-token vocabulary, then maps every token into a two-thousand-five-hundred-sixty-dimensional vector."
+  },
+  {
+    "id": "transformer",
+    "text": "Twenty-eight transformer blocks refine those vectors. Attention lets each position use earlier context, while SwiGLU layers transform what was retrieved. Rotary encoding tracks order, and grouped-query attention keeps inference efficient."
+  },
+  {
+    "id": "decode",
+    "text": "A final projection scores every possible next token. The model selects one, appends it, and repeats. An answer is simply many next-token decisions."
+  },
+  {
+    "id": "sft",
+    "text": "Pretraining teaches general text. Supervised fine-tuning adds conversations, but computes loss only on assistant responses, not the question. The same curated mix teaches instruction following, reasoning, formatting, and tool use."
+  },
+  {
+    "id": "lora",
+    "text": "On this sixteen-gigabyte laptop, full fine-tuning does not fit. LoRA freezes the two-point-one-billion-parameter base and learns small low-rank updates instead. The largest run trained three hundred three million adapter parameters, then merged them back for ordinary inference."
+  },
+  {
+    "id": "dpo",
+    "text": "DPO adds preference learning. Curated answers are chosen, while corrupted or weaker base-model answers are rejected. This sharpens behavior without training a separate reward model."
+  },
+  {
+    "id": "evidence",
+    "text": "The results are concrete: correct arithmetic, step-by-step change, algebra, and exact formatting. These are real generations from the validation dashboard, not handwritten answers."
+  },
+  {
+    "id": "results",
+    "text": "Validation improved across every supervised source. Big LoRA reached one-point-one-nine-eight validation loss and seventy percent on the chat bench. DPO reached seventy-five. Same base. Better answers."
+  }
+]

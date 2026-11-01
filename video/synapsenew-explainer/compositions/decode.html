@@ -1,0 +1,61 @@
+<template>
+  <style>
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}#root{position:absolute;inset:0;overflow:hidden;background:#EEF2F6;color:#101828;font-family:Inter,Arial,sans-serif}.clip{position:absolute;inset:0;overflow:hidden}.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(16,24,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.035) 1px,transparent 1px);background-size:64px 64px}.scene-title{position:absolute;left:90px;top:58px;font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.035em}.scene-sub{position:absolute;left:92px;top:132px;font-size:29px;line-height:1.35;color:#475467}.work{background:#fff;border:2px solid #D0D5DD;border-radius:14px;box-shadow:0 12px 30px rgba(16,24,40,.08)}.mono{font-family:'JetBrains Mono',monospace}.green{color:#079455}.red{color:#B42318}.muted{color:#667085}.label{font-size:28px;line-height:1.25;font-weight:700;color:#475467}.body{font-size:32px;line-height:1.4}.small{font-size:28px;line-height:1.35}.rule{height:2px;background:#D0D5DD}.arrow{stroke:#667085;stroke-width:4;fill:none;marker-end:url(#arrowhead)}.arrow-green{stroke:#079455;stroke-width:5;fill:none;marker-end:url(#arrowhead-green)}.badge{display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;padding:8px 16px;border-radius:8px;background:#E4E7EC;color:#344054}.badge.good{background:#D1FADF;color:#027A48}.badge.bad{background:#FEE4E2;color:#B42318}.foot{position:absolute;left:92px;bottom:46px;font-size:28px;color:#667085}.no-shadow{box-shadow:none}
+
+  #hook-proof>div,#sft-sources>div,#dpo-stats>div,.foot>div{position:absolute;bottom:0}
+  </style>
+  <style>
+    #dec-context{position:absolute;left:90px;top:225px;width:1740px;padding:32px 38px}
+    #dec-context-label{font-size:28px;font-weight:800;color:#475467;margin-bottom:15px}
+    #dec-context-text{font-family:'JetBrains Mono',monospace;font-size:35px;line-height:1.5}
+    #dec-new{color:#079455;font-weight:900}
+    #dec-head{position:absolute;left:90px;top:430px;width:1740px;height:280px;padding:30px 38px}
+    #dec-head-title{font-size:30px;font-weight:900}
+    #dec-logits{position:absolute;left:38px;right:38px;top:96px;height:90px;display:flex;gap:5px;align-items:flex-end}
+    .logit{flex:1;background:#C6D4E5;border-radius:2px 2px 0 0}
+    #dec-argmax{position:absolute;right:45px;top:28px;font-size:31px;font-weight:900;color:#079455}
+    #dec-steps{position:absolute;left:90px;top:775px;width:1740px;display:flex;gap:18px}
+    .dec-step{flex:1;padding:24px 20px;border-top:4px solid #98A2B3;font-size:28px;line-height:1.3}
+    .dec-step b{display:block;font-size:31px;margin-bottom:7px}
+    #dec-loop{position:absolute;right:100px;top:73px;font-size:29px;color:#475467}
+  </style>
+  <div data-hf-id="hf-2g3a" id="root" data-composition-id="decode" data-duration="10.448">
+    <div data-hf-id="hf-q4u8" class="grid-bg"></div>
+    <div data-hf-id="hf-mvu6" id="decode-opening" class="clip" data-start="0" data-duration="10.448"><div data-hf-id="hf-yeow">
+      <div data-hf-id="hf-byec" class="scene-title">Generation is a loop</div>
+      <div data-hf-id="hf-wx6p" class="scene-sub">One projection, one selected token, then back through the model</div>
+      <div data-hf-id="hf-kljv" id="dec-loop">64,000 scores → 1 token</div>
+      <div data-hf-id="hf-atgd" id="dec-context" class="work">
+        <div data-hf-id="hf-z21y" id="dec-context-label">CURRENT CONTEXT</div>
+        <div data-hf-id="hf-b3v0" id="dec-context-text">What is 17 + 25? 17 + 25<span data-hf-id="hf-76ca" id="dec-new"> =</span></div>
+      </div>
+    </div></div>
+    <div data-hf-id="hf-3dmc" id="dec-head-clip" class="clip" data-start="1.3" data-duration="9.148"><div data-hf-id="hf-bsm2" id="dec-head" class="work">
+      <div data-hf-id="hf-70r4" id="dec-head-title">LM head · one logit per vocabulary token</div>
+      <div data-hf-id="hf-6j4s" id="dec-argmax">argmax → “ =”</div>
+      <div data-hf-id="hf-ou38" id="dec-logits">
+        <div data-hf-id="hf-c6bo" class="logit" style="height:25%"></div><div data-hf-id="hf-fji9" class="logit" style="height:48%"></div><div data-hf-id="hf-wsqc" class="logit" style="height:32%"></div><div data-hf-id="hf-x3ru" class="logit" style="height:67%"></div><div data-hf-id="hf-46yi" class="logit" style="height:41%"></div><div data-hf-id="hf-jk6o" class="logit" style="height:58%"></div><div data-hf-id="hf-xtlk" class="logit" style="height:36%"></div><div data-hf-id="hf-4yi5" class="logit" style="height:75%"></div><div data-hf-id="hf-3te3" class="logit" style="height:46%"></div><div data-hf-id="hf-ipzp" class="logit" style="height:62%"></div><div data-hf-id="hf-p853" class="logit" style="height:28%"></div><div data-hf-id="hf-4ld6" class="logit" style="height:52%"></div><div data-hf-id="hf-i6da" class="logit" style="height:38%"></div><div data-hf-id="hf-h4oi" class="logit" style="height:70%"></div><div data-hf-id="hf-sly0" class="logit" style="height:43%"></div><div data-hf-id="hf-gh7p" class="logit" style="height:57%"></div><div data-hf-id="hf-t6gl" class="logit" style="height:31%"></div><div data-hf-id="hf-xhgf" class="logit" style="height:64%"></div><div data-hf-id="hf-8uhi" class="logit" style="height:45%"></div><div data-hf-id="hf-k3hg" class="logit" style="height:54%"></div><div data-hf-id="hf-9em2" class="logit" style="height:34%"></div><div data-hf-id="hf-zv9s" class="logit" style="height:72%"></div><div data-hf-id="hf-jba1" class="logit" style="height:40%"></div><div data-hf-id="hf-l06j" class="logit" style="height:60%"></div>
+      </div>
+      <div data-hf-id="hf-n9r8" class="small muted" style="position:absolute;left:38px;bottom:22px">Embedding and LM-head weights are tied.</div>
+    </div></div>
+    <div data-hf-id="hf-uv3u" id="dec-steps-clip" class="clip" data-hold data-start="4.4" data-duration="6.048"><div data-hf-id="hf-v5b5" id="dec-steps">
+      <div data-hf-id="hf-zwb8" class="dec-step"><b data-hf-id="hf-1eyw">1 · Project</b>final hidden state → logits</div>
+      <div data-hf-id="hf-98kp" class="dec-step"><b data-hf-id="hf-zlrk">2 · Select</b>greedy here; sampling is optional</div>
+      <div data-hf-id="hf-rkst" class="dec-step"><b data-hf-id="hf-g9vx">3 · Append</b>token 594 = “ =”</div>
+      <div data-hf-id="hf-xhnw" class="dec-step"><b data-hf-id="hf-6g01">4 · Repeat</b>then 4 · 2 · .</div>
+    </div></div>
+    <div data-hf-id="hf-2k5s" id="decode-foot" class="foot clip" data-start="6.5" data-duration="3.948"><div data-hf-id="hf-jjzb">KV caching avoids recomputing earlier tokens during inference.</div></div>
+  </div>
+  <script>
+    (()=>{
+      const tl=gsap.timeline({paused:true});
+      tl.fromTo('#dec-context',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.65,ease:'power3.out'},.2);
+      tl.fromTo('#dec-head',{opacity:0,y:35},{opacity:1,y:0,duration:.55,ease:'expo.out'},1.3);
+      tl.fromTo('.logit',{scaleY:0,transformOrigin:'bottom'},{scaleY:1,duration:.35,stagger:.025},1.75);
+      tl.fromTo('#dec-argmax',{opacity:0,scale:.85},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},3.1);
+      tl.fromTo('#dec-new',{opacity:0},{opacity:1,duration:.3},3.55);
+      tl.fromTo('.dec-step',{opacity:0},{opacity:1,duration:.35,stagger:.55},4.4);
+      window.__timelines=window.__timelines||{};window.__timelines['decode']=tl;
+    })();
+  </script>
+</template>

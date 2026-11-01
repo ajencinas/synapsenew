@@ -1,0 +1,67 @@
+<template>
+  <style>
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}#root{position:absolute;inset:0;overflow:hidden;background:#EEF2F6;color:#101828;font-family:Inter,Arial,sans-serif}.clip{position:absolute;inset:0;overflow:hidden}.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(16,24,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.035) 1px,transparent 1px);background-size:64px 64px}.scene-title{position:absolute;left:90px;top:58px;font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.035em}.scene-sub{position:absolute;left:92px;top:132px;font-size:29px;line-height:1.35;color:#475467}.work{background:#fff;border:2px solid #D0D5DD;border-radius:14px;box-shadow:0 12px 30px rgba(16,24,40,.08)}.mono{font-family:'JetBrains Mono',monospace}.green{color:#079455}.red{color:#B42318}.muted{color:#667085}.label{font-size:28px;line-height:1.25;font-weight:700;color:#475467}.body{font-size:32px;line-height:1.4}.small{font-size:28px;line-height:1.35}.rule{height:2px;background:#D0D5DD}.arrow{stroke:#667085;stroke-width:4;fill:none;marker-end:url(#arrowhead)}.arrow-green{stroke:#079455;stroke-width:5;fill:none;marker-end:url(#arrowhead-green)}.badge{display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;padding:8px 16px;border-radius:8px;background:#E4E7EC;color:#344054}.badge.good{background:#D1FADF;color:#027A48}.badge.bad{background:#FEE4E2;color:#B42318}.foot{position:absolute;left:92px;bottom:46px;font-size:28px;color:#667085}.no-shadow{box-shadow:none}
+
+  #hook-proof>div,#sft-sources>div,#dpo-stats>div,.foot>div{position:absolute;bottom:0}
+  </style>
+  <style>
+    #tr-stack{position:absolute;left:90px;top:230px;width:455px;height:690px;padding:30px}
+    #tr-stack-title{font-size:30px;font-weight:900;margin-bottom:20px}
+    .layer{height:62px;margin:10px 0;background:#EAF0F7;border:2px solid #B9C6D6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:28px;color:#344054}
+    #tr-times{font-size:54px;font-weight:900;color:#175CD3;text-align:center;margin-top:18px}
+    #tr-detail{position:absolute;left:635px;top:230px;width:1195px;height:690px;padding:32px 42px}
+    #tr-detail-title{font-size:30px;font-weight:900}
+    .tr-step{position:absolute;left:42px;right:42px;height:92px;display:flex;align-items:center;border-bottom:2px solid #E4E7EC}
+    .tr-step .name{width:265px;font-size:30px;font-weight:800}
+    .tr-step .desc{font-family:'JetBrains Mono',monospace;font-size:28px;color:#475467}
+    #tr-norm1{top:100px}#tr-attn{top:206px}#tr-res1{top:312px}#tr-norm2{top:418px}#tr-mlp{top:524px}
+    #tr-attn-extra{position:absolute;right:42px;top:226px;width:430px;font-size:28px;line-height:1.5;color:#175CD3}
+    #tr-flow-lines{position:absolute;inset:0;pointer-events:none}
+    .tr-qkv{display:flex;gap:12px;align-items:center}
+    .tr-qkv b{border:2px solid #175CD3;padding:7px 13px;border-radius:6px;color:#175CD3}
+    .tr-qkv span{margin-left:12px}
+    #tr-note{position:absolute;left:92px;bottom:48px;font-size:28px;color:#475467}
+  </style>
+  <div data-hf-id="hf-wk75" id="root" data-composition-id="transformer" data-duration="15.49">
+    <div data-hf-id="hf-q4u8" class="grid-bg"></div>
+    <div data-hf-id="hf-zbmb" id="transformer-opening" class="clip" data-start="0" data-duration="15.49"><div data-hf-id="hf-yeow">
+      <div data-hf-id="hf-za4j" class="scene-title">28 blocks refine meaning</div>
+      <div data-hf-id="hf-rpcl" class="scene-sub">The same residual block repeats, then a final norm and output projection</div>
+      <div data-hf-id="hf-22xk" id="tr-stack" class="work">
+        <div data-hf-id="hf-68qc" id="tr-stack-title">Transformer stack</div>
+        <div data-hf-id="hf-edir" class="layer">block 01</div><div data-hf-id="hf-dz7q" class="layer">block 02</div><div data-hf-id="hf-dkwp" class="layer">block 03</div><div data-hf-id="hf-54mr" class="layer">⋮</div><div data-hf-id="hf-iozk" class="layer">block 26</div><div data-hf-id="hf-iaoj" class="layer">block 27</div><div data-hf-id="hf-d4p6" class="layer">block 28</div>
+        <div data-hf-id="hf-b59f" id="tr-times">× 28</div>
+      </div>
+    </div></div>
+    <div data-hf-id="hf-y08k" id="tr-detail-clip" class="clip" data-hold data-start="1.6" data-duration="13.89"><div data-hf-id="hf-oann" id="tr-detail" class="work">
+      <div data-hf-id="hf-avqz" id="tr-detail-title">Inside one block</div>
+      <svg id="tr-flow-lines" data-layout-ignore viewBox="0 0 1195 690">
+        <defs><marker id="tr-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#667085"/></marker></defs>
+        <g stroke="#667085" stroke-width="3" fill="none" marker-end="url(#tr-arrow)">
+          <path d="M150 192 L150 202"/><path d="M150 298 L150 308"/><path d="M150 404 L150 414"/><path d="M150 510 L150 520"/>
+          <path d="M105 146 C38 146 38 358 105 358"/>
+          <path d="M105 358 C38 358 38 616 105 616"/>
+        </g>
+      </svg>
+      <div data-hf-id="hf-h5al" id="tr-norm1" class="tr-step"><div data-hf-id="hf-hb11" class="name">1 · RMSNorm</div><div data-hf-id="hf-kz9t" class="desc">scale the hidden state</div></div>
+      <div data-hf-id="hf-6s4v" id="tr-attn" class="tr-step"><div data-hf-id="hf-frye" class="name">2 · GQA + RoPE</div><div data-hf-id="hf-zefp" class="desc tr-qkv"><b>Q</b><b>K</b><b>V</b></div></div>
+      <div data-hf-id="hf-2hx7" id="tr-attn-extra">20 query heads · 4 KV heads<br data-hf-id="hf-x5px">causal: earlier context only<br data-hf-id="hf-rsrt">rotary position encoding</div>
+      <div data-hf-id="hf-iib1" id="tr-res1" class="tr-step"><div data-hf-id="hf-jya9" class="name">3 · Residual add</div><div data-hf-id="hf-mbvn" class="desc">x = x + attention(norm(x))</div></div>
+      <div data-hf-id="hf-l3em" id="tr-norm2" class="tr-step"><div data-hf-id="hf-932y" class="name">4 · RMSNorm</div><div data-hf-id="hf-u7ve" class="desc">normalize again</div></div>
+      <div data-hf-id="hf-fbmb" id="tr-mlp" class="tr-step"><div data-hf-id="hf-95vq" class="name">5 · SwiGLU</div><div data-hf-id="hf-bbrl" class="desc">hidden width 6,912 → residual add</div></div>
+    </div></div>
+    <div data-hf-id="hf-4dez" id="tr-note" class="clip" data-start="9.2" data-duration="6.29"><div data-hf-id="hf-08ml">Attention retrieves context. SwiGLU transforms it. Residuals preserve the original signal.</div></div>
+  </div>
+  <script>
+    (()=>{
+      const tl=gsap.timeline({paused:true});
+      tl.fromTo('#tr-stack',{x:-80,opacity:0},{x:0,opacity:1,duration:.65,ease:'expo.out'},.2);
+      tl.fromTo('.layer',{opacity:0},{opacity:1,duration:.25,stagger:.07},.55);
+      tl.fromTo('#tr-detail',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.85,ease:'power2.inOut'},1.6);
+      tl.fromTo('.tr-step',{opacity:0},{opacity:1,duration:.32,stagger:.65},2.5);
+      tl.fromTo('#tr-attn-extra',{opacity:0},{opacity:1,duration:.5},5.4);
+      tl.fromTo('#tr-note>div',{opacity:0},{opacity:1,duration:.4},9.2);
+      window.__timelines=window.__timelines||{};window.__timelines['transformer']=tl;
+    })();
+  </script>
+</template>

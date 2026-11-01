@@ -1,0 +1,66 @@
+<template>
+  <style>
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}#root{position:absolute;inset:0;overflow:hidden;background:#EEF2F6;color:#101828;font-family:Inter,Arial,sans-serif}.clip{position:absolute;inset:0;overflow:hidden}.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(16,24,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.035) 1px,transparent 1px);background-size:64px 64px}.scene-title{position:absolute;left:90px;top:58px;font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.035em}.scene-sub{position:absolute;left:92px;top:132px;font-size:29px;line-height:1.35;color:#475467}.work{background:#fff;border:2px solid #D0D5DD;border-radius:14px;box-shadow:0 12px 30px rgba(16,24,40,.08)}.mono{font-family:'JetBrains Mono',monospace}.green{color:#079455}.red{color:#B42318}.muted{color:#667085}.label{font-size:28px;line-height:1.25;font-weight:700;color:#475467}.body{font-size:32px;line-height:1.4}.small{font-size:28px;line-height:1.35}.rule{height:2px;background:#D0D5DD}.arrow{stroke:#667085;stroke-width:4;fill:none;marker-end:url(#arrowhead)}.arrow-green{stroke:#079455;stroke-width:5;fill:none;marker-end:url(#arrowhead-green)}.badge{display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;padding:8px 16px;border-radius:8px;background:#E4E7EC;color:#344054}.badge.good{background:#D1FADF;color:#027A48}.badge.bad{background:#FEE4E2;color:#B42318}.foot{position:absolute;left:92px;bottom:46px;font-size:28px;color:#667085}.no-shadow{box-shadow:none}
+
+  #hook-proof>div,#sft-sources>div,#dpo-stats>div,.foot>div{position:absolute;bottom:0}
+  </style>
+  <style>
+    #res-loss{position:absolute;left:90px;top:230px;width:1070px;height:590px;padding:34px 42px}
+    #res-loss-title{font-size:33px;font-weight:900;margin-bottom:30px}
+    .loss-row{position:relative;height:104px;margin-bottom:16px}
+    .loss-name{position:absolute;left:0;top:10px;width:250px;font-size:28px;font-weight:800}
+    .loss-track{position:absolute;left:270px;top:13px;width:620px;height:42px;background:#E4E7EC;border-radius:5px}
+    .loss-bar{height:42px;background:#175CD3;border-radius:5px;transform-origin:left}
+    .loss-bar.good{background:#079455}
+    .loss-value{position:absolute;right:0;top:5px;font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:800}
+    #res-bench{position:absolute;left:1250px;top:230px;width:580px;height:590px;padding:34px 38px}
+    #res-bench-title{font-size:31px;font-weight:900;margin-bottom:35px}
+    .bench-number{font-size:84px;font-weight:900;letter-spacing:-.05em;line-height:1}
+    .bench-label{font-size:28px;color:#475467;margin:8px 0 30px}
+    #res-extra{position:absolute;left:92px;bottom:49px;font-size:28px;color:#475467}
+    #res-final{position:absolute;inset:0;background:#EEF2F6;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0}
+    #res-final-line{font-size:88px;font-weight:900;letter-spacing:-.045em}
+    #res-final-line .green{margin-left:18px}
+    #res-final-sub{font-size:32px;color:#475467;margin-top:22px}
+  </style>
+  <div data-hf-id="hf-3nmq" id="root" data-composition-id="results" data-duration="13.922">
+    <div data-hf-id="hf-q4u8" class="grid-bg"></div>
+    <div data-hf-id="hf-yc73" id="res-charts" class="clip" data-start="0" data-duration="10.0"><div data-hf-id="hf-yeow">
+      <div data-hf-id="hf-bpiq" class="scene-title">Measured, not just nicer samples</div>
+      <div data-hf-id="hf-fpj7" class="scene-sub">Identical validation sets and deterministic grading across checkpoints</div>
+      <div data-hf-id="hf-ac73" id="res-loss" class="work">
+        <div data-hf-id="hf-uo0m" id="res-loss-title">15-source validation loss · lower is better</div>
+        <div data-hf-id="hf-pn6e" class="loss-row"><div data-hf-id="hf-z4u2" class="loss-name">Pretrain</div><div data-hf-id="hf-8uev" class="loss-track"><div data-hf-id="hf-t5vj" class="loss-bar" style="width:100%"></div></div><div data-hf-id="hf-xvos" class="loss-value">2.746</div></div>
+        <div data-hf-id="hf-67wa" class="loss-row"><div data-hf-id="hf-kxt2" class="loss-name">LoRA r=64</div><div data-hf-id="hf-c06v" class="loss-track"><div data-hf-id="hf-q2n7" class="loss-bar" style="width:45.4%"></div></div><div data-hf-id="hf-ot5s" class="loss-value">1.248</div></div>
+        <div data-hf-id="hf-6m7b" class="loss-row"><div data-hf-id="hf-16fh" class="loss-name green">big-LoRA r=256</div><div data-hf-id="hf-blvu" class="loss-track"><div data-hf-id="hf-13qq" class="loss-bar good" style="width:43.6%"></div></div><div data-hf-id="hf-9dcf" class="loss-value green">1.198</div></div>
+        <div data-hf-id="hf-70ic" class="loss-row"><div data-hf-id="hf-mwtu" class="loss-name">v3 full-FT</div><div data-hf-id="hf-b7kt" class="loss-track"><div data-hf-id="hf-uk30" class="loss-bar" style="width:41.9%"></div></div><div data-hf-id="hf-dgcw" class="loss-value">1.150</div></div>
+      </div>
+      <div data-hf-id="hf-17yw" id="res-bench" class="work">
+        <div data-hf-id="hf-jylm" id="res-bench-title">49-item chat bench</div>
+        <div data-hf-id="hf-dtiw" class="bench-number">32%</div><div data-hf-id="hf-zo93" class="bench-label">pretrain base</div>
+        <div data-hf-id="hf-tzyt" class="bench-number green">70%</div><div data-hf-id="hf-3b2t" class="bench-label">big-LoRA SFT</div>
+        <div data-hf-id="hf-yoz8" class="bench-number green">75%</div><div data-hf-id="hf-16ey" class="bench-label">SFT + DPO</div>
+      </div>
+      <div data-hf-id="hf-vo6n" id="res-extra" data-hold>big-LoRA: GSM8K 12% · ARC-Challenge 30.5% · v3 reference: 10% / 30.5%</div>
+    </div></div>
+    <div data-hf-id="hf-ll26" id="res-final" class="clip" data-start="10.0" data-duration="3.922"><div data-hf-id="hf-cdn7" id="res-final-inner" style="text-align:center">
+      <div data-hf-id="hf-tyna" id="res-final-line">Same base. <span data-hf-id="hf-pqvv" class="green">Better answers.</span></div>
+      <div data-hf-id="hf-ni4i" id="res-final-sub">Synapse 2.1B · SFT + LoRA + DPO</div>
+    </div></div>
+  </div>
+  <script>
+    (()=>{
+      const tl=gsap.timeline({paused:true});
+      tl.fromTo('#res-charts>div',{opacity:0},{opacity:1,duration:.25},0);
+      tl.fromTo('.loss-bar',{scaleX:0},{scaleX:1,duration:.75,ease:'power3.out',stagger:.3},.4);
+      tl.fromTo('.loss-value',{opacity:0},{opacity:1,duration:.3,stagger:.3},1.0);
+      tl.fromTo('.bench-number',{opacity:0,y:22},{opacity:1,y:0,duration:.45,ease:'expo.out',stagger:.55},2.1);
+      tl.fromTo('.bench-label',{opacity:0},{opacity:1,duration:.3,stagger:.55},2.35);
+      tl.fromTo('#res-extra',{opacity:0},{opacity:1,duration:.4},5.0);
+      tl.to('#res-charts>div',{opacity:0,duration:.35,ease:'power2.in'},9.65);
+      tl.fromTo('#res-final',{opacity:0},{opacity:1,duration:.4,ease:'power2.out'},10.0);
+      tl.fromTo('#res-final-inner',{scale:.96},{scale:1,duration:.55,ease:'expo.out'},10.0);
+      window.__timelines=window.__timelines||{};window.__timelines['results']=tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,8 @@
+{
+  "duration": 7.119,
+  "assertions": [
+    {"kind":"appearsBy","selector":"#hook-question","bySec":0.4},
+    {"kind":"appearsBy","selector":"#hook-new-answer","bySec":2.3},
+    {"kind":"staysInFrame","selector":"#hook-new-answer"}
+  ]
+}

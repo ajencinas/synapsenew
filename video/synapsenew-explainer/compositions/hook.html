@@ -1,0 +1,58 @@
+<template>
+  <style>
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}#root{position:absolute;inset:0;overflow:hidden;background:#EEF2F6;color:#101828;font-family:Inter,Arial,sans-serif}.clip{position:absolute;inset:0;overflow:hidden}.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(16,24,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.035) 1px,transparent 1px);background-size:64px 64px}.scene-title{position:absolute;left:90px;top:58px;font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.035em}.scene-sub{position:absolute;left:92px;top:132px;font-size:29px;line-height:1.35;color:#475467}.work{background:#fff;border:2px solid #D0D5DD;border-radius:14px;box-shadow:0 12px 30px rgba(16,24,40,.08)}.mono{font-family:'JetBrains Mono',monospace}.green{color:#079455}.red{color:#B42318}.muted{color:#667085}.label{font-size:28px;line-height:1.25;font-weight:700;color:#475467}.body{font-size:32px;line-height:1.4}.small{font-size:28px;line-height:1.35}.rule{height:2px;background:#D0D5DD}.arrow{stroke:#667085;stroke-width:4;fill:none;marker-end:url(#arrowhead)}.arrow-green{stroke:#079455;stroke-width:5;fill:none;marker-end:url(#arrowhead-green)}.badge{display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;padding:8px 16px;border-radius:8px;background:#E4E7EC;color:#344054}.badge.good{background:#D1FADF;color:#027A48}.badge.bad{background:#FEE4E2;color:#B42318}.foot{position:absolute;left:92px;bottom:46px;font-size:28px;color:#667085}.no-shadow{box-shadow:none}
+
+  #hook-proof>div,#sft-sources>div,#dpo-stats>div,.foot>div{position:absolute;bottom:0}
+  </style>
+  <style>
+    #hook-question{position:absolute;left:90px;top:68px;font-size:66px;font-weight:900;letter-spacing:-.04em}
+    #hook-sub{position:absolute;left:92px;top:154px;font-size:28px;color:#475467}
+    .hook-panel{position:absolute;top:245px;width:1740px;height:610px;padding:38px 42px}
+    #hook-base-panel{left:90px}
+    #hook-new-panel{left:90px;border-color:#75D6A5;background:#F0FDF4}
+    .hook-model{font-size:30px;font-weight:800;margin-bottom:28px}
+    .hook-answer{font-family:'JetBrains Mono',monospace;font-size:60px;line-height:1.35;white-space:pre-wrap}
+    #hook-new-answer{font-family:Inter,sans-serif;font-size:84px;line-height:1.2;font-weight:900;letter-spacing:-.03em;color:#027A48;margin-top:60px}
+    #hook-after{clip-path:inset(0 0 0 100%);background:#EEF2F6}
+    #hook-divider{position:absolute;left:50%;top:220px;width:4px;height:680px;background:#079455;opacity:0}
+    #hook-proof{position:absolute;left:92px;bottom:44px;font-size:28px;color:#667085}
+  </style>
+  <div data-hf-id="hf-7l48" id="root" data-composition-id="hook" data-duration="7.119">
+    <div data-hf-id="hf-q4u8" class="grid-bg"></div>
+    <div data-hf-id="hf-hkj9" id="hook-before" class="clip" data-start="0" data-duration="7.119">
+      <div data-hf-id="hf-pawj" id="hook-before-inner">
+        <div data-hf-id="hf-0s5s" id="hook-question">What is 17 + 25?</div>
+        <div data-hf-id="hf-rpla" id="hook-sub">One real prompt. Two actual checkpoints.</div>
+        <div data-hf-id="hf-qwn9" id="hook-base-panel" class="work hook-panel">
+          <div data-hf-id="hf-ezy0" class="hook-model red">PRETRAIN BASE · ACTUAL OUTPUT</div>
+          <div data-hf-id="hf-nyko" class="hook-answer">## What is 17 + 25?
+
+What is 17 + 25? 17 + 25 = 42.
+
+## What is 17 + 25? …</div>
+        </div>
+      </div>
+    </div>
+    <div data-hf-id="hf-s4wy" id="hook-after" class="clip" data-start="0" data-duration="7.119" data-layout-allow-occlusion>
+      <div data-hf-id="hf-yeow">
+        <div data-hf-id="hf-w846" id="hook-new-panel" class="work hook-panel">
+          <div data-hf-id="hf-lvpg" class="hook-model green">BIG-LORA SFT · ACTUAL OUTPUT</div>
+          <div data-hf-id="hf-n226" id="hook-new-answer">17 + 25 = 42.<br data-hf-id="hf-x5px"><br data-hf-id="hf-rsrt">The answer is: 42</div>
+        </div>
+      </div>
+    </div>
+    <div data-hf-id="hf-fomk" id="hook-divider"></div>
+    <div data-hf-id="hf-wloe" id="hook-proof" class="clip" data-hold data-start="2.2" data-duration="4.919"><div data-hf-id="hf-t6bu">Same weights at the start. Different behavior after training.</div></div>
+  </div>
+  <script>
+    (()=>{
+      const tl=gsap.timeline({paused:true});
+      tl.set('#hook-before-inner',{opacity:1},0);
+      tl.fromTo('#hook-after',{clipPath:'inset(0 0 0 100%)'},{clipPath:'inset(0 0 0 0%)',duration:1.05,ease:'sine.inOut'},1.05);
+      tl.fromTo('#hook-divider',{opacity:0},{opacity:1,duration:.18,ease:'power1.out'},1.05);
+      tl.fromTo('#hook-proof>div',{opacity:0},{opacity:1,duration:.3,ease:'power2.out'},2.2);
+      window.__timelines=window.__timelines||{};
+      window.__timelines['hook']=tl;
+    })();
+  </script>
+</template>

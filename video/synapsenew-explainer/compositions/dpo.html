@@ -1,0 +1,48 @@
+<template>
+  <style>
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}#root{position:absolute;inset:0;overflow:hidden;background:#EEF2F6;color:#101828;font-family:Inter,Arial,sans-serif}.clip{position:absolute;inset:0;overflow:hidden}.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(16,24,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.035) 1px,transparent 1px);background-size:64px 64px}.scene-title{position:absolute;left:90px;top:58px;font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.035em}.scene-sub{position:absolute;left:92px;top:132px;font-size:29px;line-height:1.35;color:#475467}.work{background:#fff;border:2px solid #D0D5DD;border-radius:14px;box-shadow:0 12px 30px rgba(16,24,40,.08)}.mono{font-family:'JetBrains Mono',monospace}.green{color:#079455}.red{color:#B42318}.muted{color:#667085}.label{font-size:28px;line-height:1.25;font-weight:700;color:#475467}.body{font-size:32px;line-height:1.4}.small{font-size:28px;line-height:1.35}.rule{height:2px;background:#D0D5DD}.arrow{stroke:#667085;stroke-width:4;fill:none;marker-end:url(#arrowhead)}.arrow-green{stroke:#079455;stroke-width:5;fill:none;marker-end:url(#arrowhead-green)}.badge{display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;padding:8px 16px;border-radius:8px;background:#E4E7EC;color:#344054}.badge.good{background:#D1FADF;color:#027A48}.badge.bad{background:#FEE4E2;color:#B42318}.foot{position:absolute;left:92px;bottom:46px;font-size:28px;color:#667085}.no-shadow{box-shadow:none}
+
+  #hook-proof>div,#sft-sources>div,#dpo-stats>div,.foot>div{position:absolute;bottom:0}
+  </style>
+  <style>
+    #dpo-chosen{position:absolute;left:90px;top:220px;width:1740px;height:270px;padding:30px 40px;border-color:#75D6A5;background:#F0FDF4}
+    #dpo-rejected{position:absolute;left:90px;top:525px;width:1740px;height:270px;padding:30px 40px;border-color:#FDA29B;background:#FFFAFA}
+    .dpo-lane-title{font-size:32px;font-weight:900;margin-bottom:20px}
+    .dpo-prompt{display:none}
+    .dpo-answer{position:absolute;left:40px;top:104px;width:1660px;font-family:'JetBrains Mono',monospace;font-size:54px;line-height:1.35}
+    #dpo-margin{position:absolute;left:360px;top:850px;width:1200px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:31px}
+    #dpo-stats{position:absolute;left:92px;bottom:45px;font-size:28px;color:#475467}
+    #dpo-acc{position:absolute;right:92px;top:75px;text-align:right;font-size:29px;color:#475467}
+  </style>
+  <div data-hf-id="hf-ifdb" id="root" data-composition-id="dpo" data-duration="11.728">
+    <div data-hf-id="hf-q4u8" class="grid-bg"></div>
+    <div data-hf-id="hf-d3kl" id="dpo-opening" class="clip" data-start="0" data-duration="11.728"><div data-hf-id="hf-yeow">
+      <div data-hf-id="hf-zj7p" class="scene-title">DPO learns from preferences</div>
+      <div data-hf-id="hf-lfi3" class="scene-sub">Pair construction illustrated with a truncated negative</div>
+      <div data-hf-id="hf-448b" id="dpo-acc">Best validation preference accuracy<br data-hf-id="hf-x5px"><b data-hf-id="hf-phtw" class="green" style="font-size:42px">0.669</b></div>
+      <div data-hf-id="hf-7mxb" id="dpo-chosen" class="work">
+        <div data-hf-id="hf-3w2a" class="dpo-lane-title green">CHOSEN · curated assistant response</div>
+        <div data-hf-id="hf-e26n" class="dpo-prompt">What is 17 + 25?</div>
+        <div data-hf-id="hf-ckp7" class="dpo-answer">17 + 25 = 42. &lt;im_end&gt;</div>
+      </div>
+    </div></div>
+    <div data-hf-id="hf-ofm0" id="dpo-rejected-clip" class="clip" data-start="1.2" data-duration="10.528"><div data-hf-id="hf-lquf" id="dpo-rejected" class="work">
+      <div data-hf-id="hf-xem6" class="dpo-lane-title red">REJECTED · corrupted / base-model / swapped answer</div>
+      <div data-hf-id="hf-tsj3" class="dpo-prompt">What is 17 + 25?</div>
+      <div data-hf-id="hf-qkdj" class="dpo-answer">17 + 25 =<br data-hf-id="hf-rsrt"><span data-hf-id="hf-ujl2" class="muted">[truncated]</span></div>
+    </div></div>
+    <div data-hf-id="hf-101z" id="dpo-margin-clip" class="clip" data-start="4.0" data-duration="7.728"><div data-hf-id="hf-v8hx" id="dpo-margin">increase β · (policy margin chosen − policy margin rejected)<br data-hf-id="hf-szow"><span data-hf-id="hf-55en" class="small muted" style="font-family:Inter">Reference = the same SFT policy with adapters switched off</span></div></div>
+    <div data-hf-id="hf-syz0" id="dpo-stats" class="clip" data-hold data-start="6.2" data-duration="5.528"><div data-hf-id="hf-xsgm">5,832 pairs · 661 base-model rejects · 1,038 swaps · 4,133 corruptions · no separate reward model</div></div>
+  </div>
+  <script>
+    (()=>{
+      const tl=gsap.timeline({paused:true});
+      tl.fromTo('#dpo-chosen',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.65,ease:'power3.out'},.25);
+      tl.fromTo('#dpo-rejected',{clipPath:'inset(0 0 0 100%)'},{clipPath:'inset(0 0 0 0%)',duration:.65,ease:'power3.out'},1.2);
+      tl.fromTo('#dpo-margin',{opacity:0,y:25},{opacity:1,y:0,duration:.45,ease:'expo.out'},4.0);
+      tl.fromTo('#dpo-acc',{opacity:0,scale:.85},{opacity:1,scale:1,duration:.4,ease:'back.out(1.4)'},5.1);
+      tl.fromTo('#dpo-stats>div',{opacity:0},{opacity:1,duration:.4},6.2);
+      window.__timelines=window.__timelines||{};window.__timelines['dpo']=tl;
+    })();
+  </script>
+</template>

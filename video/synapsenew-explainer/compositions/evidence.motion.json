@@ -1,0 +1,9 @@
+{
+  "duration": 12.799,
+  "assertions": [
+    {"kind":"appearsBy","selector":"#ev-change .ev-answer-text","bySec":1.1},
+    {"kind":"appearsBy","selector":"#ev-algebra .ev-answer-text","bySec":5.3},
+    {"kind":"appearsBy","selector":"#ev-pong-answer","bySec":9.7},
+    {"kind":"staysInFrame","selector":"#ev-pong-answer"}
+  ]
+}

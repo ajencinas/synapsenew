@@ -11,3 +11,7 @@ __pycache__/
 /reports
 /results
 .pytest_cache/
+
+# rendered video + decoded validation frames (source stays in git)
+/video/synapsenew_explainer.mp4
+/video/validation/

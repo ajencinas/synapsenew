@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"modelName","type":"string","label":"Model name","default":"Synapse 2.1B"},
+  {"id":"accentColor","type":"color","label":"Improved-path accent","default":"#079455"}
+]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      *{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}
+      #root{position:relative;width:100%;height:100%;overflow:hidden}
+      .scene-host{position:absolute;inset:0}
+      audio{display:none}
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-6dt2" id="root" data-composition-id="main" data-start="0" data-duration="116.147" data-width="1920" data-height="1080">
+      <div data-hf-id="hf-albe" id="hook" class="clip scene-host" data-composition-id="hook" data-composition-src="compositions/hook.html" data-start="0" data-duration="7.119" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-1p3o" id="tokens" class="clip scene-host" data-composition-id="tokens" data-composition-src="compositions/tokens.html" data-start="7.119" data-duration="11.232" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-k8vd" id="transformer" class="clip scene-host" data-composition-id="transformer" data-composition-src="compositions/transformer.html" data-start="18.351" data-duration="15.49" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-2fjb" id="decode" class="clip scene-host" data-composition-id="decode" data-composition-src="compositions/decode.html" data-start="33.841" data-duration="10.448" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-ebne" id="sft" class="clip scene-host" data-composition-id="sft" data-composition-src="compositions/sft.html" data-start="44.289" data-duration="15.49" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-ck2n" id="lora" class="clip scene-host" data-composition-id="lora" data-composition-src="compositions/lora.html" data-start="59.779" data-duration="17.919" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-egr2" id="dpo" class="clip scene-host" data-composition-id="dpo" data-composition-src="compositions/dpo.html" data-start="77.698" data-duration="11.728" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-oao3" id="evidence" class="clip scene-host" data-composition-id="evidence" data-composition-src="compositions/evidence.html" data-start="89.426" data-duration="12.799" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+      <div data-hf-id="hf-bzpa" id="results" class="clip scene-host" data-composition-id="results" data-composition-src="compositions/results.html" data-start="102.225" data-duration="13.922" data-width="1920" data-height="1080" data-track-index="1" data-track-kind="graphics"></div>
+
+      <audio data-hf-id="hf-g7dw" id="voice-hook" class="clip" src="assets/voice/hook.mp3" data-start="0" data-duration="6.269" data-volume="1"></audio>
+      <audio data-hf-id="hf-4tjv" id="voice-tokens" class="clip" src="assets/voice/tokens.mp3" data-start="7.119" data-duration="10.632" data-volume="1"></audio>
+      <audio data-hf-id="hf-lwz5" id="voice-transformer" class="clip" src="assets/voice/transformer.mp3" data-start="18.351" data-duration="14.89" data-volume="1"></audio>
+      <audio data-hf-id="hf-clnn" id="voice-decode" class="clip" src="assets/voice/decode.mp3" data-start="33.841" data-duration="9.848" data-volume="1"></audio>
+      <audio data-hf-id="hf-cxrk" id="voice-sft" class="clip" src="assets/voice/sft.mp3" data-start="44.289" data-duration="14.89" data-volume="1"></audio>
+      <audio data-hf-id="hf-wui3" id="voice-lora" class="clip" src="assets/voice/lora.mp3" data-start="59.779" data-duration="17.319" data-volume="1"></audio>
+      <audio data-hf-id="hf-a8pn" id="voice-dpo" class="clip" src="assets/voice/dpo.mp3" data-start="77.698" data-duration="11.128" data-volume="1"></audio>
+      <audio data-hf-id="hf-adaw" id="voice-evidence" class="clip" src="assets/voice/evidence.mp3" data-start="89.426" data-duration="12.199" data-volume="1"></audio>
+      <audio data-hf-id="hf-fe4a" id="voice-results" class="clip" src="assets/voice/results.mp3" data-start="102.225" data-duration="13.322" data-volume="1"></audio>
+
+      <audio data-hf-id="hf-g52k" id="sfx-hook-wipe" class="clip" src=".media/audio/sfx/sfx_001.mp3" data-start="1.05" data-duration="0.4" data-volume="0.4"></audio>
+      <audio data-hf-id="hf-4d00" id="sfx-sft" class="clip" src=".media/audio/sfx/sfx_001.mp3" data-start="44.289" data-duration="0.4" data-volume="0.3"></audio>
+      <audio data-hf-id="hf-blaj" id="sfx-lora" class="clip" src=".media/audio/sfx/sfx_001.mp3" data-start="59.779" data-duration="0.4" data-volume="0.3"></audio>
+      <audio data-hf-id="hf-zqda" id="sfx-dpo" class="clip" src=".media/audio/sfx/sfx_001.mp3" data-start="77.698" data-duration="0.4" data-volume="0.3"></audio>
+      <audio data-hf-id="hf-rs4t" id="sfx-answer-change" class="clip" src=".media/audio/sfx/sfx_002.mp3" data-start="89.85" data-duration="0.4" data-volume="0.42"></audio>
+      <audio data-hf-id="hf-8ovv" id="sfx-answer-algebra" class="clip" src=".media/audio/sfx/sfx_002.mp3" data-start="94.05" data-duration="0.4" data-volume="0.42"></audio>
+      <audio data-hf-id="hf-2o80" id="sfx-answer-pong" class="clip" src=".media/audio/sfx/sfx_002.mp3" data-start="98.55" data-duration="0.4" data-volume="0.42"></audio>
+      <audio data-hf-id="hf-af60" id="sfx-final" class="clip" src=".media/audio/sfx/sfx_001.mp3" data-start="112.225" data-duration="0.4" data-volume="0.35"></audio>
+    </div>
+    <script>
+      window.__timelines=window.__timelines||{};
+      window.__timelines['main']=gsap.timeline({paused:true});
+    </script>
+  </body>
+</html>

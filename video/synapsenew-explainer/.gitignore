@@ -1,0 +1,9 @@
+.hyperframes/
+.media/
+node_modules/
+renders/
+assets/voice/
+assets/music/
+*.mp4
+*.wav
+*.mp3

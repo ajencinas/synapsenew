@@ -1,0 +1,8 @@
+{
+  "duration": 13.922,
+  "assertions": [
+    {"kind":"appearsBy","selector":"#res-loss","bySec":0.5},
+    {"kind":"appearsBy","selector":"#res-final-line","bySec":10.7},
+    {"kind":"staysInFrame","selector":"#res-final-line"}
+  ]
+}

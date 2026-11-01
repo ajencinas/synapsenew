@@ -1,0 +1,62 @@
+<template>
+  <style>
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}#root{position:absolute;inset:0;overflow:hidden;background:#EEF2F6;color:#101828;font-family:Inter,Arial,sans-serif}.clip{position:absolute;inset:0;overflow:hidden}.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(16,24,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.035) 1px,transparent 1px);background-size:64px 64px}.scene-title{position:absolute;left:90px;top:58px;font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.035em}.scene-sub{position:absolute;left:92px;top:132px;font-size:29px;line-height:1.35;color:#475467}.work{background:#fff;border:2px solid #D0D5DD;border-radius:14px;box-shadow:0 12px 30px rgba(16,24,40,.08)}.mono{font-family:'JetBrains Mono',monospace}.green{color:#079455}.red{color:#B42318}.muted{color:#667085}.label{font-size:28px;line-height:1.25;font-weight:700;color:#475467}.body{font-size:32px;line-height:1.4}.small{font-size:28px;line-height:1.35}.rule{height:2px;background:#D0D5DD}.arrow{stroke:#667085;stroke-width:4;fill:none;marker-end:url(#arrowhead)}.arrow-green{stroke:#079455;stroke-width:5;fill:none;marker-end:url(#arrowhead-green)}.badge{display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;padding:8px 16px;border-radius:8px;background:#E4E7EC;color:#344054}.badge.good{background:#D1FADF;color:#027A48}.badge.bad{background:#FEE4E2;color:#B42318}.foot{position:absolute;left:92px;bottom:46px;font-size:28px;color:#667085}.no-shadow{box-shadow:none}
+
+  #hook-proof>div,#sft-sources>div,#dpo-stats>div,.foot>div{position:absolute;bottom:0}
+  </style>
+  <style>
+    #tokens-prompt{position:absolute;left:90px;top:205px;width:1740px;height:116px;padding:28px 36px;font-family:'JetBrains Mono',monospace;font-size:37px}
+    #tokens-vocab{position:absolute;right:92px;top:82px;text-align:right;font-size:29px;color:#475467}
+    #tokens-row{position:absolute;left:90px;top:375px;width:1740px;display:flex;gap:12px}
+    .tok{width:162px;height:134px;padding:17px 10px;text-align:center;background:#fff;border:2px solid #D0D5DD;border-radius:12px}
+    .tok .surface{font-family:'JetBrains Mono',monospace;font-size:29px;font-weight:700;height:45px}
+    .tok .id{font-family:'JetBrains Mono',monospace;font-size:28px;color:#175CD3;margin-top:12px}
+    #tokens-vector{position:absolute;left:300px;top:625px;width:1320px;height:265px;padding:28px 38px}
+    #tokens-vector-title{font-size:29px;font-weight:800}
+    #tokens-bars{position:absolute;left:38px;right:38px;top:102px;height:100px;display:flex;align-items:flex-end;gap:18px}
+    .vbar{flex:1;background:#175CD3;border-radius:4px 4px 0 0}
+    #tokens-dim{position:absolute;right:38px;top:28px;font-size:34px;font-weight:900;color:#175CD3}
+    #tokens-arrow{position:absolute;left:938px;top:530px;font-size:54px;color:#667085}
+  </style>
+  <div data-hf-id="hf-lu9e" id="root" data-composition-id="tokens" data-duration="11.232">
+    <div data-hf-id="hf-q4u8" class="grid-bg"></div>
+    <div data-hf-id="hf-chya" id="tokens-opening" class="clip" data-start="0" data-duration="11.232"><div data-hf-id="hf-yeow">
+      <div data-hf-id="hf-w926" class="scene-title">Text becomes numbers</div>
+      <div data-hf-id="hf-c37a" class="scene-sub">The exact tokenizer output for our question</div>
+      <div data-hf-id="hf-ci9a" id="tokens-vocab"><b data-hf-id="hf-kre3">64,000</b> token vocabulary</div>
+      <div data-hf-id="hf-xtdb" id="tokens-prompt" class="work">What is 17 + 25?</div>
+    </div></div>
+    <div data-hf-id="hf-njfb" id="tokens-chip-clip" class="clip" data-start="1.0" data-duration="10.232"><div data-hf-id="hf-9tbw" id="tokens-row">
+      <div data-hf-id="hf-512a" class="tok"><div data-hf-id="hf-m3ij" class="surface">What</div><div data-hf-id="hf-12er" class="id">3034</div></div>
+      <div data-hf-id="hf-v7nq" class="tok"><div data-hf-id="hf-up0a" class="surface">␣is</div><div data-hf-id="hf-0tqx" class="id">570</div></div>
+      <div data-hf-id="hf-vlyr" class="tok"><div data-hf-id="hf-d7cm" class="surface">␣</div><div data-hf-id="hf-bibo" class="id">476</div></div>
+      <div data-hf-id="hf-w09s" class="tok"><div data-hf-id="hf-w0m8" class="surface">1</div><div data-hf-id="hf-x6j2" class="id">272</div></div>
+      <div data-hf-id="hf-t84l" class="tok"><div data-hf-id="hf-tms2" class="surface">7</div><div data-hf-id="hf-15lc" class="id">278</div></div>
+      <div data-hf-id="hf-tmfm" class="tok"><div data-hf-id="hf-mr8n" class="surface">␣+</div><div data-hf-id="hf-8cdh" class="id">765</div></div>
+      <div data-hf-id="hf-u0qn" class="tok"><div data-hf-id="hf-cel6" class="surface">␣</div><div data-hf-id="hf-bnwc" class="id">476</div></div>
+      <div data-hf-id="hf-uf1o" class="tok"><div data-hf-id="hf-utp5" class="surface">2</div><div data-hf-id="hf-ws81" class="id">273</div></div>
+      <div data-hf-id="hf-rmwh" class="tok"><div data-hf-id="hf-ufe4" class="surface">5</div><div data-hf-id="hf-vlay" class="id">276</div></div>
+      <div data-hf-id="hf-s17i" class="tok"><div data-hf-id="hf-mecq" class="surface">?</div><div data-hf-id="hf-gxa1" class="id">286</div></div>
+    </div></div>
+    <div data-hf-id="hf-sva9" id="tokens-arrow-clip" class="clip" data-start="5.0" data-duration="6.232"><div data-hf-id="hf-u09c" id="tokens-arrow">↓</div></div>
+    <div data-hf-id="hf-jjti" id="tokens-vector-clip" class="clip" data-hold data-start="5.2" data-duration="6.032"><div data-hf-id="hf-80ap" id="tokens-vector" class="work">
+      <div data-hf-id="hf-9zrg" id="tokens-vector-title">Token embedding</div><div data-hf-id="hf-vxzw" id="tokens-dim">2,560 dims</div>
+      <div data-hf-id="hf-bk4m" id="tokens-bars">
+        <div data-hf-id="hf-rswb" class="vbar" style="height:42%"></div><div data-hf-id="hf-jssw" class="vbar" style="height:76%"></div><div data-hf-id="hf-858s" class="vbar" style="height:58%"></div><div data-hf-id="hf-hyjl" class="vbar" style="height:88%"></div><div data-hf-id="hf-l2bp" class="vbar" style="height:35%"></div><div data-hf-id="hf-rvw8" class="vbar" style="height:69%"></div><div data-hf-id="hf-rj5w" class="vbar" style="height:94%"></div><div data-hf-id="hf-t6fa" class="vbar" style="height:52%"></div><div data-hf-id="hf-6lzu" class="vbar" style="height:81%"></div><div data-hf-id="hf-cjh4" class="vbar" style="height:47%"></div><div data-hf-id="hf-p5dp" class="vbar" style="height:66%"></div><div data-hf-id="hf-pzxu" class="vbar" style="height:38%"></div>
+      </div>
+      <div data-hf-id="hf-iq35" class="small muted" style="position:absolute;left:38px;bottom:20px">Each token ID selects one learned vector.</div>
+    </div></div>
+    <div data-hf-id="hf-j0ur" id="tokens-foot" class="foot clip" data-start="5.2" data-duration="6.032"><div data-hf-id="hf-rfpz">Byte-level BPE · digit-per-token pre-tokenizer</div></div>
+  </div>
+  <script>
+    (()=>{
+      const tl=gsap.timeline({paused:true});
+      tl.fromTo('#tokens-prompt',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.65,ease:'power3.out'},.25);
+      tl.fromTo('.tok',{opacity:0,y:24},{opacity:1,y:0,duration:.38,ease:'expo.out',stagger:.09},1.0);
+      tl.fromTo('#tokens-arrow',{opacity:0},{opacity:1,duration:.25},5.0);
+      tl.fromTo('#tokens-vector',{opacity:0,scale:.96},{opacity:1,scale:1,duration:.55,ease:'expo.out'},5.2);
+      tl.fromTo('.vbar',{scaleY:0,transformOrigin:'bottom'},{scaleY:1,duration:.55,ease:'power3.out',stagger:.045},5.65);
+      window.__timelines=window.__timelines||{};window.__timelines['tokens']=tl;
+    })();
+  </script>
+</template>

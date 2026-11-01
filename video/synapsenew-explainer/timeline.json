@@ -1,0 +1,77 @@
+{
+  "duration": 116.147,
+  "scenes": [
+    {
+      "id": "hook",
+      "text": "Ask a language model a simple question. The difference between a base model and a trained one is immediately visible.",
+      "path": "assets/voice/hook.mp3",
+      "duration": 6.269,
+      "start": 0.0,
+      "scene_duration": 7.119
+    },
+    {
+      "id": "tokens",
+      "text": "First, text becomes token IDs. Synapse uses a sixty-four-thousand-token vocabulary, then maps every token into a two-thousand-five-hundred-sixty-dimensional vector.",
+      "path": "assets/voice/tokens.mp3",
+      "duration": 10.632,
+      "start": 7.119,
+      "scene_duration": 11.232
+    },
+    {
+      "id": "transformer",
+      "text": "Twenty-eight transformer blocks refine those vectors. Attention lets each position use earlier context, while SwiGLU layers transform what was retrieved. Rotary encoding tracks order, and grouped-query attention keeps inference efficient.",
+      "path": "assets/voice/transformer.mp3",
+      "duration": 14.89,
+      "start": 18.351,
+      "scene_duration": 15.49
+    },
+    {
+      "id": "decode",
+      "text": "A final projection scores every possible next token. The model selects one, appends it, and repeats. An answer is simply many next-token decisions.",
+      "path": "assets/voice/decode.mp3",
+      "duration": 9.848,
+      "start": 33.841,
+      "scene_duration": 10.448
+    },
+    {
+      "id": "sft",
+      "text": "Pretraining teaches general text. Supervised fine-tuning adds conversations, but computes loss only on assistant responses, not the question. The same curated mix teaches instruction following, reasoning, formatting, and tool use.",
+      "path": "assets/voice/sft.mp3",
+      "duration": 14.89,
+      "start": 44.289,
+      "scene_duration": 15.49
+    },
+    {
+      "id": "lora",
+      "text": "On this sixteen-gigabyte laptop, full fine-tuning does not fit. LoRA freezes the two-point-one-billion-parameter base and learns small low-rank updates instead. The largest run trained three hundred three million adapter parameters, then merged them back for ordinary inference.",
+      "path": "assets/voice/lora.mp3",
+      "duration": 17.319,
+      "start": 59.779,
+      "scene_duration": 17.919
+    },
+    {
+      "id": "dpo",
+      "text": "DPO adds preference learning. Curated answers are chosen, while corrupted or weaker base-model answers are rejected. This sharpens behavior without training a separate reward model.",
+      "path": "assets/voice/dpo.mp3",
+      "duration": 11.128,
+      "start": 77.698,
+      "scene_duration": 11.728
+    },
+    {
+      "id": "evidence",
+      "text": "The results are concrete: correct arithmetic, step-by-step change, algebra, and exact formatting. These are real generations from the validation dashboard, not handwritten answers.",
+      "path": "assets/voice/evidence.mp3",
+      "duration": 12.199,
+      "start": 89.426,
+      "scene_duration": 12.799
+    },
+    {
+      "id": "results",
+      "text": "Validation improved across every supervised source. Big LoRA reached one-point-one-nine-eight validation loss and seventy percent on the chat bench. DPO reached seventy-five. Same base. Better answers.",
+      "path": "assets/voice/results.mp3",
+      "duration": 13.322,
+      "start": 102.225,
+      "scene_duration": 13.922
+    }
+  ]
+}

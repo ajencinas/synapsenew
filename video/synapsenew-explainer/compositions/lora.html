@@ -1,0 +1,61 @@
+<template>
+  <style>
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#EEF2F6}#root{position:absolute;inset:0;overflow:hidden;background:#EEF2F6;color:#101828;font-family:Inter,Arial,sans-serif}.clip{position:absolute;inset:0;overflow:hidden}.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(16,24,40,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.035) 1px,transparent 1px);background-size:64px 64px}.scene-title{position:absolute;left:90px;top:58px;font-size:58px;line-height:1.05;font-weight:900;letter-spacing:-.035em}.scene-sub{position:absolute;left:92px;top:132px;font-size:29px;line-height:1.35;color:#475467}.work{background:#fff;border:2px solid #D0D5DD;border-radius:14px;box-shadow:0 12px 30px rgba(16,24,40,.08)}.mono{font-family:'JetBrains Mono',monospace}.green{color:#079455}.red{color:#B42318}.muted{color:#667085}.label{font-size:28px;line-height:1.25;font-weight:700;color:#475467}.body{font-size:32px;line-height:1.4}.small{font-size:28px;line-height:1.35}.rule{height:2px;background:#D0D5DD}.arrow{stroke:#667085;stroke-width:4;fill:none;marker-end:url(#arrowhead)}.arrow-green{stroke:#079455;stroke-width:5;fill:none;marker-end:url(#arrowhead-green)}.badge{display:inline-flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;padding:8px 16px;border-radius:8px;background:#E4E7EC;color:#344054}.badge.good{background:#D1FADF;color:#027A48}.badge.bad{background:#FEE4E2;color:#B42318}.foot{position:absolute;left:92px;bottom:46px;font-size:28px;color:#667085}.no-shadow{box-shadow:none}
+
+  #hook-proof>div,#sft-sources>div,#dpo-stats>div,.foot>div{position:absolute;bottom:0}
+  </style>
+  <style>
+    #lora-base{position:absolute;left:90px;top:225px;width:840px;height:590px;padding:34px 40px}
+    #lora-adapters{position:absolute;left:1030px;top:225px;width:800px;height:590px;padding:34px 40px;border-color:#75D6A5}
+    .lora-title{font-size:37px;font-weight:900;letter-spacing:-.02em}
+    .lora-tag{font-size:28px;font-weight:800;margin:10px 0 28px}
+    #lora-weight-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:9px;margin-top:45px}
+    .weight{height:38px;background:#C6D4E5;border-radius:3px}
+    #lora-formula{font-family:'JetBrains Mono',monospace;font-size:36px;margin:38px 0;color:#101828}
+    .matrix{display:inline-flex;align-items:center;justify-content:center;border:3px solid #079455;background:#F0FDF4;font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:800}
+    #matrix-a{width:140px;height:190px;margin-right:28px}#matrix-b{width:310px;height:100px}
+    #lora-count{font-size:40px;font-weight:900;color:#027A48;margin-top:18px}
+    #lora-merge{position:absolute;left:340px;top:865px;width:1240px;height:105px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;background:#101828;color:#fff;border-radius:14px}
+    #lora-vram{position:absolute;right:92px;top:74px;font-size:29px;color:#475467;text-align:right}
+  </style>
+  <div data-hf-id="hf-kb38" id="root" data-composition-id="lora" data-duration="17.919">
+    <div data-hf-id="hf-q4u8" class="grid-bg"></div>
+    <div data-hf-id="hf-opxg" id="lora-opening" class="clip" data-start="0" data-duration="17.919"><div data-hf-id="hf-yeow">
+      <div data-hf-id="hf-uvc7" class="scene-title">LoRA makes training fit</div>
+      <div data-hf-id="hf-qx9j" class="scene-sub">Freeze the large model. Train small low-rank updates in full precision.</div>
+      <div data-hf-id="hf-zbzi" id="lora-vram">Laptop GPU<br data-hf-id="hf-x5px"><b data-hf-id="hf-j1hr">16 GB VRAM</b></div>
+      <div data-hf-id="hf-8m81" id="lora-base" class="work">
+        <div data-hf-id="hf-8e0m" class="lora-title">2.1B base weights</div><div data-hf-id="hf-8c0w" class="lora-tag red">FROZEN · bf16</div>
+        <div data-hf-id="hf-8kq6" class="body muted">Attention + SwiGLU projections stay unchanged during training.</div>
+        <div data-hf-id="hf-phn7" id="lora-weight-grid">
+          <div data-hf-id="hf-e2ps" class="weight"></div><div data-hf-id="hf-vupk" class="weight"></div><div data-hf-id="hf-unsh" class="weight"></div><div data-hf-id="hf-v23i" class="weight"></div><div data-hf-id="hf-tv6f" class="weight"></div><div data-hf-id="hf-u9hg" class="weight"></div><div data-hf-id="hf-t2kd" class="weight"></div><div data-hf-id="hf-tgve" class="weight"></div><div data-hf-id="hf-ymur" class="weight"></div><div data-hf-id="hf-z15s" class="weight"></div><div data-hf-id="hf-ke54" class="weight"></div><div data-hf-id="hf-jzu3" class="weight"></div>
+          <div data-hf-id="hf-jlj2" class="weight"></div><div data-hf-id="hf-j781" class="weight"></div><div data-hf-id="hf-isx0" class="weight"></div><div data-hf-id="hf-ielz" class="weight"></div><div data-hf-id="hf-i0ay" class="weight"></div><div data-hf-id="hf-hlzx" class="weight"></div><div data-hf-id="hf-nklc" class="weight"></div><div data-hf-id="hf-n6ab" class="weight"></div><div data-hf-id="hf-kjpv" class="weight"></div><div data-hf-id="hf-ky0w" class="weight"></div><div data-hf-id="hf-jr3t" class="weight"></div><div data-hf-id="hf-k5eu" class="weight"></div>
+          <div data-hf-id="hf-iyhr" class="weight"></div><div data-hf-id="hf-jcss" class="weight"></div><div data-hf-id="hf-i5vp" class="weight"></div><div data-hf-id="hf-ik6q" class="weight"></div><div data-hf-id="hf-hd9n" class="weight"></div><div data-hf-id="hf-hrko" class="weight"></div><div data-hf-id="hf-7296" class="weight"></div><div data-hf-id="hf-6ny5" class="weight"></div><div data-hf-id="hf-7uv8" class="weight"></div><div data-hf-id="hf-7gk7" class="weight"></div><div data-hf-id="hf-8nha" class="weight"></div><div data-hf-id="hf-8969" class="weight"></div>
+          <div data-hf-id="hf-9g3c" class="weight"></div><div data-hf-id="hf-91sb" class="weight"></div><div data-hf-id="hf-a8pe" class="weight"></div><div data-hf-id="hf-9ued" class="weight"></div><div data-hf-id="hf-35ut" class="weight"></div><div data-hf-id="hf-3k5u" class="weight"></div><div data-hf-id="hf-3ygv" class="weight"></div><div data-hf-id="hf-4crw" class="weight"></div><div data-hf-id="hf-4r2x" class="weight"></div><div data-hf-id="hf-55dy" class="weight"></div><div data-hf-id="hf-5joz" class="weight"></div><div data-hf-id="hf-5y00" class="weight"></div>
+        </div>
+      </div>
+    </div></div>
+    <div data-hf-id="hf-fl56" id="lora-adapters-clip" class="clip" data-hold data-start="1.4" data-duration="16.519"><div data-hf-id="hf-f552" id="lora-adapters" class="work">
+      <div data-hf-id="hf-p4cb" class="lora-title">LoRA adapters</div><div data-hf-id="hf-pg7t" class="lora-tag green">TRAINABLE · fp32 · r = 256</div>
+      <div data-hf-id="hf-qw9w" id="matrix-a" class="matrix">A<br data-hf-id="hf-rsrt">256 × in</div><div data-hf-id="hf-ijy9" id="matrix-b" class="matrix">B<br data-hf-id="hf-szow">out × 256</div>
+      <div data-hf-id="hf-2rzu" id="lora-formula">W′ = W + (α/r) · B · A</div>
+      <div data-hf-id="hf-za7g" class="body">168 linear layers</div>
+      <div data-hf-id="hf-ruih" id="lora-count">302.8M trainable</div>
+    </div></div>
+    <div data-hf-id="hf-2663" id="lora-merge-clip" class="clip" data-start="10.5" data-duration="7.419"><div data-hf-id="hf-yemm" id="lora-merge">merge adapters into W′ → ordinary checkpoint → ordinary inference</div></div>
+  </div>
+  <script>
+    (()=>{
+      const tl=gsap.timeline({paused:true});
+      tl.fromTo('#lora-base',{x:-70,opacity:0},{x:0,opacity:1,duration:.6,ease:'expo.out'},.2);
+      tl.fromTo('.weight',{opacity:0},{opacity:1,duration:.25,stagger:.018},.6);
+      tl.fromTo('#lora-adapters',{clipPath:'inset(0 0 0 100%)'},{clipPath:'inset(0 0 0 0%)',duration:.8,ease:'power2.inOut'},1.4);
+      tl.fromTo('#matrix-a',{scaleY:0,transformOrigin:'center'},{scaleY:1,duration:.55,ease:'expo.out'},2.7);
+      tl.fromTo('#matrix-b',{scaleX:0,transformOrigin:'center'},{scaleX:1,duration:.55,ease:'expo.out'},3.2);
+      tl.fromTo('#lora-formula',{opacity:0},{opacity:1,duration:.4},4.3);
+      tl.fromTo('#lora-count',{opacity:0,scale:.85},{opacity:1,scale:1,duration:.4,ease:'back.out(1.4)'},5.3);
+      tl.fromTo('#lora-merge',{y:45,opacity:0},{y:0,opacity:1,duration:.6,ease:'expo.out'},10.5);
+      window.__timelines=window.__timelines||{};window.__timelines['lora']=tl;
+    })();
+  </script>
+</template>
