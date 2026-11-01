@@ -218,7 +218,7 @@ def main():
     n_steps = 6 if PROBE else SFT_STEPS
     gen = torch.Generator().manual_seed(SEED)
     sampler = WeightedRandomSampler(weights,
-                                    num_samples=n_steps * BATCH_SIZE * GRAD_ACCUM_STEPS,
+                                    num_samples=(n_steps - curr_step) * BATCH_SIZE * GRAD_ACCUM_STEPS,
                                     replacement=True, generator=gen)
     loader = DataLoader(train_examples, batch_size=BATCH_SIZE, sampler=sampler,
                         collate_fn=collate, num_workers=2,

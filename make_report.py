@@ -9,9 +9,10 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import REPORT_DIR
 
-TAGS = ["pretrain", "sft_best", "dpo_best", "v3ref"]
-LABELS = {"pretrain": "Pretrain base", "sft_best": "synapsenew SFT",
-          "dpo_best": "synapsenew SFT+DPO", "v3ref": "Reference v3 full-FT SFT"}
+TAGS = ["pretrain", "sft_best", "dpo_best", "v3ref", "biglora", "soup_a50"]
+LABELS = {"pretrain": "Pretrain base", "sft_best": "synapsenew SFT (r=64)",
+          "dpo_best": "synapsenew SFT+DPO", "v3ref": "Reference v3 full-FT SFT",
+          "biglora": "big-LoRA SFT (r=256)", "soup_a50": "soup v3+SFT"}
 
 
 def jload(path, default=None):
@@ -112,6 +113,22 @@ def main():
 
     # ---- SFT training ----
     sft = jload(os.path.join(REPORT_DIR, "sft_training_latest.json"))
+    sft_big = jload(os.path.join(REPORT_DIR, "sft_training_latest_biglora.json"))
+    if sft_big:
+        A("\n## 3b. big-LoRA SFT run (r=256, max local)\n")
+        h = sft_big.get("hyperparameters", {})
+        A(f"- {sft_big['curr_step']}/{sft_big['total_steps']} steps, "
+          f"micro {h.get('micro_batch')}x{h.get('grad_accum')}, LoRA r={h.get('lora_r')} "
+          f"(302.8M trainable), lr {h.get('max_lr')}")
+        A(f"- wall: {sft_big.get('wall_hours')}h; best overall val "
+          f"{sft_big.get('best_overall_val', 0):.4f}")
+        hist = sft_big.get("eval_history", [])
+        if hist:
+            A("\n| step | overall | tulu3 | metamath | format_following | creative |\n|---|---|---|---|---|---|")
+            for e in hist:
+                A(f"| {e.get('step')} | {e.get('overall', float('nan')):.4f} | "
+                  f"{e.get('tulu3',0):.3f} | {e.get('metamath',0):.3f} | "
+                  f"{e.get('format_following',0):.3f} | {e.get('creative',0):.3f} |")
     if sft:
         A("\n## 3. SFT run\n")
         h = sft.get("hyperparameters", {})
@@ -126,6 +143,23 @@ def main():
                 A(f"| {e.get('step')} | {e.get('overall', float('nan')):.4f} | "
                   f"{e.get('tulu3',0):.3f} | {e.get('no_robots',0):.3f} | "
                   f"{e.get('creative',0):.3f} | {e.get('metamath',0):.3f} | {e.get('nli',0):.3f} |")
+
+    # ---- standardized evals (GSM8K / ARC) ----
+    std = {t: jload(os.path.join(REPORT_DIR, f"standard_eval_{t}.json"))
+           for t in TAGS}
+    if any(std.values()):
+        A("\n## 4b. Standardized benchmarks (no judge)\n")
+        A("| checkpoint | GSM8K (4-shot CoT) | ARC-Challenge (loglikelihood) |")
+        A("|---|---|---|")
+        for t in TAGS:
+            s = std.get(t)
+            if not s:
+                continue
+            g = s.get("gsm8k", {})
+            a = s.get("arc_challenge", {})
+            A(f"| {LABELS[t]} | {g.get('acc',0)*100:.1f}% ({g.get('correct',0)}/{g.get('n',0)}) | "
+              f"{a.get('acc',0)*100:.1f}% ({a.get('correct',0)}/{a.get('n',0)}) |")
+        A("\nARC-C random baseline = 25% (4 choices).")
 
     # ---- DPO training ----
     dpo = jload(os.path.join(REPORT_DIR, "dpo_training_latest.json"))
