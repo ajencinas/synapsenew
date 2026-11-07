@@ -17,17 +17,19 @@ import tempfile
 import unittest
 from fractions import Fraction
 
-# Make the generator importable.
+# Make the private generator importable when running on a machine that has it.
+# Set PRIVATE_DATA_DIR to the directory containing generate_math_operations_cot.py.
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GEN_DIR = os.path.join(REPO_ROOT, "download_pretrain_others", "src")
+GEN_DIR = os.environ.get("PRIVATE_DATA_DIR") or os.path.join(
+    REPO_ROOT, "private_data_generation", "src")
 sys.path.insert(0, GEN_DIR)
 
 try:
     import generate_math_operations_cot as g  # noqa: E402
 except ImportError:                            # pragma: no cover
     raise unittest.SkipTest(
-        "download_pretrain_others/ (private synthetic-data generators) not present "
-        "— this test only runs on the author's machine")
+        "private math-CoT generator not present — set PRIVATE_DATA_DIR to its "
+        "source directory to run this test")
 
 
 BANNED_SUBSTRINGS = ["('+'", "('-'", "('×'", "('*'", "('/'"]

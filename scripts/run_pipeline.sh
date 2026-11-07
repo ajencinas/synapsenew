@@ -5,13 +5,13 @@
 # so the morning report still gets built.
 set -u
 REPO=$(cd "$(dirname "$0")/.." && pwd)
-VENV=/home/alfonso/Python/synapse/synapse
-export SYNAPSENEW_DIR=${SYNAPSENEW_DIR:-/media/alfonso/shared/synapsenew}
+VENV=${SYNAPSENEW_VENV:-$REPO/.venv}
+export SYNAPSENEW_DIR=${SYNAPSENEW_DIR:-$HOME/synapsenew}
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 LOGDIR="$SYNAPSENEW_DIR/logs"
 
 cd "$REPO"
-source "$VENV/bin/activate"
+if [ -x "$VENV/bin/activate" ]; then source "$VENV/bin/activate"; fi
 mkdir -p "$LOGDIR" "$SYNAPSENEW_DIR"/{checkpoints,reports}
 
 # tuned knobs (overridden by config.env if present)
@@ -26,7 +26,7 @@ export SFT_STEPS SFT_BATCH SFT_ACCUM SFT_COMPILE DPO_EPOCHS SFT_DEADLINE_TS DPO_
 
 CK=$SYNAPSENEW_DIR/checkpoints
 PRETRAIN=$CK/pretrain_v2_full.pth
-REF_V3=/home/alfonso/Python/synapse/sparky/sparky_data/sft_best.pth
+REF_V3=${REF_V3_SFT_BEST:-$CK/ref_v3_sft_best.pth}
 
 stage() {  # stage <name> <cmd...>
   local name=$1; shift

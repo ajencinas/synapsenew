@@ -17,7 +17,7 @@ Recipe notes (see README for the full improvement story):
 Saves merged (weights-only-delta) checkpoints that load directly into the
 existing SynapseInfer / sft_bench tooling.
 
-Run:  SYNAPSENEW_DIR=/media/alfonso/shared/synapsenew python train_sft.py
+Run:  SYNAPSENEW_DIR="$HOME/synapsenew" python train_sft.py
 Env knobs: SFT_STEPS, SFT_MAX_LR, SFT_BATCH, SFT_ACCUM, SFT_COMPILE,
            SFT_EVAL_EVERY, SFT_SAVE_EVERY, SFT_EVAL_CAP, SFT_DEADLINE_TS,
            SFT_PROBE=1 (6-step speed/memory probe), SFT_RESUME=1

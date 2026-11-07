@@ -1,3 +1,5 @@
+> **Historical reference:** this flow documents the original v1–v3 SFT line. For the current LoRA + DPO path, see the root `README.md` and `train_sft.py`.
+
 # SynapseGPT — SFT data flow
 
 All SFT inputs, the notebook/script that produces each, where the data lives on

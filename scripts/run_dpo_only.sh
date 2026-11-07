@@ -3,13 +3,13 @@
 # collate-mask fix). Launched 2026-10-31 04:5x.
 set -u
 REPO=$(cd "$(dirname "$0")/.." && pwd)
-VENV=/home/alfonso/Python/synapse/synapse
-export SYNAPSENEW_DIR=${SYNAPSENEW_DIR:-/media/alfonso/shared/synapsenew}
+VENV=${SYNAPSENEW_VENV:-$REPO/.venv}
+export SYNAPSENEW_DIR=${SYNAPSENEW_DIR:-$HOME/synapsenew}
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 LOGDIR="$SYNAPSENEW_DIR/logs"
 
 cd "$REPO"
-source "$VENV/bin/activate"
+if [ -x "$VENV/bin/activate" ]; then source "$VENV/bin/activate"; fi
 mkdir -p "$LOGDIR"
 
 export DPO_EPOCHS=${DPO_EPOCHS:-2}

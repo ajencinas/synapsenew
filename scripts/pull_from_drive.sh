@@ -2,7 +2,7 @@
 # Pull everything synapsenew needs from Google Drive (rclone remote "gdrive",
 # folder synapse/). Safe to re-run: rclone skips already-transferred files.
 set -eu
-WS=${SYNAPSENEW_DIR:-/media/alfonso/shared/synapsenew}
+WS=${SYNAPSENEW_DIR:-$HOME/synapsenew}
 mkdir -p "$WS"/{data,checkpoints,logs,reports}
 
 log() { echo "[$(date +%H:%M:%S)] $*"; }

@@ -2,8 +2,8 @@
 
 > **Which trainer should I use?**
 > This folder is the original, full-parameter SFT pipeline used for the v1–v3
-> A100 runs and it remains the source of the 15-source data builders.
-> For the current laptop-sized LoRA pipeline and the DPO stage, use the
+> A100 runs and remains the source of the 15-source data builders.
+> For the current laptop-sized LoRA pipeline and DPO stage, use the
 > repository-root `train_sft.py`, `build_dpo_data.py` and `train_dpo.py`.
 
 Turns the pretrained checkpoint into the chat + tool-use model. Everything here is
@@ -83,3 +83,10 @@ C empty prompt + the same math (must never call), D tool prompt + fact questions
    old runs to `v{N}_.../` first).
 4. Train on Colab (`sft_pre_train.ipynb`), ship `sft_best.pth`.
 5. Gate with `eval_tool_use` + `sparky/sft_bench` before serving it.
+
+## Not included
+
+Some optional private data-generation pipelines and proprietary corpora are not
+part of this repository. The public builders and download scripts above are
+sufficient to inspect and run the core SFT path; teacher-based generators require
+your own API credentials and external source data.

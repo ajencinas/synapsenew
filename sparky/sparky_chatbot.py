@@ -858,29 +858,37 @@ def chat():
 DRIVE_PATHS = {
     "pretrain": "synapse/checkpoints/synapse_2b_d2560_l28.pth",
     "sft": "synapse/sft_checkpoints/v3_15source/sft_best.pth",  # v3 SHIPPED 2026-09-05 (python+search tools; v2 archive: v2_12source/)
+    "synapsenew_sft": "synapsenew/checkpoints/sft_best.pth",
+    "synapsenew_dpo": "synapsenew/checkpoints/dpo_best.pth",
+    "synapsenew_biglora": "synapsenew/checkpoints/sft_best_biglora.pth",
 }
 DRIVE_TOKENIZER = "synapse/tokenizer_out/tokenizer.json"
 
 # ── .env loading ──────────────────────────────────────────────────────────────
 
 def _load_env():
-    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
-    if not os.path.exists(env_path):
-        return {}
+    """Load repo-root .env, then sparky/.env (later values win)."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    repo = os.path.dirname(here)
     env = {}
-    with open(env_path) as f:
-        for line in f:
-            line = line.strip()
-            if line and not line.startswith("#") and "=" in line:
-                k, v = line.split("=", 1)
-                env[k.strip()] = v.strip().strip('"').strip("'")
+    for env_path in (os.path.join(repo, ".env"), os.path.join(here, ".env")):
+        if not os.path.exists(env_path):
+            continue
+        with open(env_path) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    env[k.strip()] = v.strip().strip('"').strip("'")
     return env
 
 _env = _load_env()
-NGROK_AUTHTOKEN = _env.get("NGROK_AUTHTOKEN", "")
-BRAVE_API_KEY = _env.get("BRAVE_API_KEY", "")
+NGROK_AUTHTOKEN = os.environ.get("NGROK_AUTHTOKEN") or _env.get("NGROK_AUTHTOKEN", "")
+BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY") or _env.get("BRAVE_API_KEY", "")
 if BRAVE_API_KEY:
     os.environ["BRAVE_API_KEY"] = BRAVE_API_KEY
+if NGROK_AUTHTOKEN:
+    os.environ["NGROK_AUTHTOKEN"] = NGROK_AUTHTOKEN
 
 
 def _download(path, dest):
@@ -918,8 +926,8 @@ def main():
     parser.add_argument("--no-ngrok", action="store_true", help="Skip ngrok tunnel")
     parser.add_argument("--no-compile", action="store_true",
                         help="Skip torch.compile (more stable)")
-    parser.add_argument("--variant", choices=["pretrain", "sft"], default="pretrain",
-                        help="Which checkpoint to load (default: pretrain)")
+    parser.add_argument("--variant", choices=list(DRIVE_PATHS), default="pretrain",
+                        help="Which Drive checkpoint variant to load (default: pretrain)")
     args = parser.parse_args()
 
     # ── require GPU ──

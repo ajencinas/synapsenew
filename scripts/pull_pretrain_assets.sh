@@ -3,7 +3,7 @@
 # This is intentionally separate from scripts/pull_from_drive.sh because the
 # merged shards are ~329 GB.
 set -eu
-WS=${SYNAPSENEW_DIR:-/media/alfonso/shared/synapsenew}
+WS=${SYNAPSENEW_DIR:-$HOME/synapsenew}
 DATA="$WS/data"
 mkdir -p "$DATA"/{token_shards_merged,tokenizer_out,manifests}
 

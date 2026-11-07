@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """SynapseGPT supervised fine-tuning (SFT).
 
-Continues the pretrained SynapseGPT checkpoint on the ~73k ChatML dataset built
-by the SFT data pipeline. Implements the spec in sft/SFT_TRAIN_PLAN.md:
+Continues the pretrained SynapseGPT checkpoint on the SFT ChatML dataset built
+by the SFT data pipeline. Implements the reference recipe in sft/README.md:
   - loads pretrain weights only (fresh optimizer), infers vocab from the ckpt
   - 4-way tokenization_id guard (fail loud on mismatch)
   - weighted per-source sampling (the §6 mix), dynamic padding
@@ -39,7 +39,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader, WeightedRandomSampler
 
-# --- shared model (single source of truth; see sft/SFT_TRAIN_PLAN.md §0.1) ---
+# --- shared model (single source of truth; see sft/README.md) ---
 # synapse_model.py lives at the repo root; add both the script dir and the repo
 # root to sys.path so this works whether run from a clone (VM) or a flat copy.
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -122,7 +122,7 @@ def tokenizer_fingerprint(path):
 
 def get_lr(it, total_it):
     """Cosine schedule with linear warmup. Local to sft.py (NOT shared) because
-    MAX_LR/MIN_LR/WARMUP_STEPS differ from pretrain — see SFT_TRAIN_PLAN.md §0.1."""
+    MAX_LR/MIN_LR/WARMUP_STEPS differ from pretrain — see sft/README.md."""
     if it < WARMUP_STEPS:
         return MAX_LR * it / WARMUP_STEPS
     decay_ratio = (it - WARMUP_STEPS) / max(1, (total_it - WARMUP_STEPS))

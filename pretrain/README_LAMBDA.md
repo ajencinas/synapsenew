@@ -18,10 +18,10 @@ Drive so they survive ephemeral instances.
 
 ## GPU Requirements
 
-| Instance       | VRAM   | Cost/hr  | Est. runtime | Notes                        |
-|----------------|--------|----------|--------------|------------------------------|
-| NVIDIA H200    | 141 GB | ~$2.50   | ~500 hrs     | Recommended balance          |
-| NVIDIA B200    | 192 GB | ~$3.00   | ~375 hrs     | Faster, more headroom        |
+| Instance       | VRAM   | Notes                        |
+|----------------|--------|------------------------------|
+| NVIDIA H200    | 141 GB | comfortable headroom         |
+| NVIDIA B200    | 192 GB | faster, more headroom        |
 
 Minimum VRAM: ~80 GB (model + optimizer + activations for `B=4`, `GA=64`, `seq=2048`).
 
@@ -31,8 +31,8 @@ Minimum VRAM: ~80 GB (model + optimizer + activations for `B=4`, `GA=64`, `seq=2
 
 ```bash
 # 1. SSH into your Lambda instance and clone the repo
-git clone <your-repo-url> ~/synapse
-cd ~/synapse
+git clone https://github.com/ajencinas/synapsenew.git ~/synapsenew
+cd ~/synapsenew
 
 # 2. One-time: configure rclone for Google Drive
 rclone config
@@ -60,7 +60,7 @@ Env knobs you can set before running:
 | `LOCAL_DIR`      | auto-detected              | Base directory for data/ckpts   |
 | `GDRIVE_REMOTE`  | `gdrive`                   | rclone remote name              |
 | `GDRIVE_PATH`    | `synapse`                  | Base path on Drive              |
-| `MAX_TOKENS`     | `42000000000` (42B)        | Token budget                    |
+| `MAX_TOKENS`     | `70000000000` (70B)        | Selection budget; unused remainder carries over |
 | `CHECKPOINT_NAME`| `synapse_2b_d2560_l28.pth`| Checkpoint filename             |
 | `SKIP_DATA_PULL` | (unset)                    | Set to `1` to skip shard pull   |
 
@@ -116,7 +116,7 @@ All optional — values can be set in the shell before running `train.py`:
 |----------------------------|----------------------------------------|------------------------------------------------|
 | `SYNAPSE_DIR`              | `./synapse` (VM)                       | Root dir: must contain `token_shards_merged/`  |
 | `CHECKPOINT_NAME`          | `synapse_2b_d2560_l28.pth`             | Checkpoint filename in `checkpoints/`          |
-| `MAX_TOKENS`               | `42000000000`                          | Total token budget (42B default)               |
+| `MAX_TOKENS`               | `70000000000`                          | Selection budget (70B default)                 |
 | `EXPECTED_TOK_ID`          | `7a570a7ba9fc7985`                     | Tokenization ID; must match your tokenizer     |
 | `SKIP_DRIVE_MOUNT`         | (unset)                                | Set to `1` on VM (skips Colab Drive mount)     |
 | `SKIP_STAGE`               | (unset)                                | Set to `1` if data is already on fast storage  |
@@ -127,27 +127,11 @@ All optional — values can be set in the shell before running `train.py`:
 
 ## Data Mix Configuration
 
-`train.py` ships with the full multi-source `DATA_MIX` (wikipedia, C4/fineweb, code,
-finemath, arxiv, books, synthetic math — see the dict near the top of the file).
-Adjust weights there if you want a different mix:
-
-```python
-DATA_MIX = {
-    "data_wikipedia":       {"weight": 0.40, "max_epochs": 4},
-    "data_c4":              0.20,
-    "data_code":            0.15,
-    "data_finemath":        0.10,
-    "data_books_gutemberg": {"weight": 0.05, "max_epochs": 20},
-    "data_books_faded":     {"weight": 0.03, "max_epochs": 20},
-    "data_arxiv":           0.02,
-    "data_adult":           {"weight": 0.02, "max_epochs": 20},
-    "data_distilled_facts": {"weight": 0.03, "max_epochs": 20},
-}
-```
-
-Entries with `max_epochs` > 1 allow a source with limited unique shards to repeat and
-fill its allocated budget. Weights must sum to 1.00. Sources not found on disk are
-silently skipped.
+`DATA_MIX` in `pretrain/train.py` is the authoritative mix (web, code, math,
+technical text, books, and verified synthetic sources). Source-limited entries may
+repeat up to their `max_epochs` value to fill the selection budget. Edit the dict
+in `train.py` or supply your own corpus layout; mismatched tokenization IDs fail
+loudly before training.
 
 ---
 
@@ -187,21 +171,12 @@ picks up exactly where it left off.
 
 ---
 
-## Cost Estimation
+## Compute Planning
 
-Based on a B200 GPU at ~3.0B tok/hr for a 2B-param model:
-
-| Metric              | Value               |
-|---------------------|---------------------|
-| Tokens per step     | 524,288             |
-| Total tokens        | 42,000,000,000      |
-| Estimated steps     | ~80,100             |
-| Est. wall time      | ~14-21 days         |
-| GPU cost (H200)     | ~$850-$1,250        |
-| GPU cost (B200)     | ~$1,000-$1,500      |
-
-Use spot/preemptible instances to reduce cost — the checkpoint system handles
-interruptions cleanly.
+Each optimizer step consumes `BATCH * GRAD_ACCUM * BLOCK_SIZE` tokens
+(524,288 at the defaults). Measure throughput on your own GPU and size
+`MAX_TOKENS` from that; costs vary too much by provider and spot availability to
+publish a fixed estimate. The checkpoint system handles preemption cleanly.
 
 ---
 

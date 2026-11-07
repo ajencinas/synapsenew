@@ -2,14 +2,15 @@
 """Shared constants, paths, and helpers for synapsenew.
 
 Layout assumptions (all overridable by env):
-  SYNAPSENEW_DIR  default /media/alfonso/shared/synapsenew
+  SYNAPSENEW_DIR  default ~/synapsenew
     data/         tokenizer_out/, manifests/, sft_tokenized/, dpo/
     checkpoints/  pretrain + trained checkpoints
     logs/         run logs
     reports/      eval JSONs + markdown reports
 
 Data comes from Google Drive (rclone remote "gdrive", folder synapse/) —
-see scripts/pull_from_drive.sh.
+see scripts/pull_from_drive.sh. The public GitHub repo contains code only;
+corpora and checkpoints are external.
 """
 import hashlib
 import json
@@ -21,7 +22,7 @@ import torch
 # --------------------------------------------------------------------------
 # Paths
 # --------------------------------------------------------------------------
-WS = os.environ.get("SYNAPSENEW_DIR", "/media/alfonso/shared/synapsenew")
+WS = os.environ.get("SYNAPSENEW_DIR") or os.path.expanduser("~/synapsenew")
 DATA_DIR = os.path.join(WS, "data")
 CKPT_DIR = os.path.join(WS, "checkpoints")
 LOG_DIR = os.path.join(WS, "logs")
@@ -35,10 +36,10 @@ DPO_DIR = os.path.join(DATA_DIR, "dpo")
 PRETRAIN_CKPT = os.environ.get("PRETRAIN_CKPT",
                                os.path.join(CKPT_DIR, "pretrain_v2_full.pth"))
 
-# Reference checkpoint (previous full-FT run, v3 15-source) — kept at the
-# original synapse checkout on this laptop.
+# Reference checkpoint (previous full-FT run, v3 15-source). Supply
+# REF_V3_SFT_BEST or place ref_v3_sft_best.pth in the checkpoints directory.
 REF_V3_SFT_BEST = os.environ.get(
-    "REF_V3_SFT_BEST", "/home/alfonso/Python/synapse/sparky/sparky_data/sft_best.pth")
+    "REF_V3_SFT_BEST", os.path.join(CKPT_DIR, "ref_v3_sft_best.pth"))
 
 for d in (DATA_DIR, CKPT_DIR, LOG_DIR, REPORT_DIR, DPO_DIR):
     os.makedirs(d, exist_ok=True)

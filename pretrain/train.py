@@ -49,7 +49,7 @@ torch._logging.set_logs(inductor=logging.WARNING, dynamic=logging.WARNING)
 logging.getLogger("torch._inductor").setLevel(logging.WARNING)
 
 import sys as _sys
-# Shared model = single source of truth (sft/SFT_TRAIN_PLAN.md §0.1). Add the
+# Shared model = single source of truth (sft/README.md). Add the
 # script dir and its parent so `import synapse_model` resolves whether train.py
 # was cloned (lives in pretrain/) or downloaded flat next to it (/content).
 for _p in (os.path.dirname(os.path.abspath(__file__)),
@@ -256,7 +256,7 @@ else:
 # ==================== 4. MODEL DEFINITION ====================
 # RMSNorm, precompute_rope, apply_rope, CausalGQA, SwiGLU, TransformerBlock,
 # and SynapseGPT are imported from synapse_model (single source of truth;
-# see sft/SFT_TRAIN_PLAN.md §0.1). The model code there is byte-identical to
+# see sft/README.md). The model code there is byte-identical to
 # what used to live here.
 
 

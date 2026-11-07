@@ -3,7 +3,7 @@
 # synapsenew layout ($SYNAPSENEW_DIR/data/<asset>) with symlinks.
 # Safe to re-run; only creates links when the target exists.
 set -eu
-WS=${SYNAPSENEW_DIR:-/media/alfonso/shared/synapsenew}
+WS=${SYNAPSENEW_DIR:-$HOME/synapsenew}
 DATA="$WS/data"
 mkdir -p "$DATA"
 

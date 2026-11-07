@@ -1,11 +1,35 @@
 # Secrets / local environments
 .env
 .env.*
+!.env.example
 rclone.conf
+rclone.conf*
 .venv/
 venv/
 __pycache__/
 *.pyc
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.p8
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+.netrc
+.npmrc
+.pypirc
+.envrc
+.direnv/
+credentials.json
+application_default_credentials.json
+client_secret*.json
+service-account*.json
+token.json
+ngrok_token.txt
+.streamlit/secrets.toml
 
 # checkpoints, data, logs, reports stay out of git (they live in $SYNAPSENEW_DIR
 # / Google Drive; the repo keeps symlinks to the workspace for convenience)

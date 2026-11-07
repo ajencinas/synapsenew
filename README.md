@@ -9,21 +9,27 @@ This repository combines the original **synapse** pretraining stack with the
 improved **synapsenew** post-training stack. The original repo remains intact;
 this is the single full-pipeline repo going forward.
 
+> **Code-only public repo.** Corpora, tokenized shards, and checkpoints are not
+> in Git. They live in an external Google Drive workspace. The rclone helper
+> scripts use the author’s `gdrive:synapse/` layout and require access to that
+> workspace; without it, rebuild the data using `download_pretrain_data/` and
+> `tokenize/`.
+
 ## What is here
 
 | Stage | Path | Notes |
 |---|---|---|
 | Architecture | `synapse_model.py` | Single source of truth used by pretraining and reference SFT |
 | Raw corpora | `download_pretrain_data/` | Public C4, Wikipedia, RedPajama, code, FineMath, FineWeb, reasoning notebooks |
-| Tokenizer | `tokenize/` | Byte-level BPE, 64k vocab, uint16 shards, merge/eval/upload pipeline |
-| Pretraining | `pretrain/` | `train.py`, Colab notebook, Lambda/RunPod bootstrap, checkpoint recovery |
+| Tokenizer | [tokenize/](tokenize/README.md) | Byte-level BPE, 64k vocab, uint16 shards, merge/eval/upload pipeline |
+| Pretraining | [pretrain/](pretrain/README_LAMBDA.md) | `train.py`, Colab notebook, Lambda/RunPod bootstrap, checkpoint recovery |
 | SFT — improved | `train_sft.py` | **Primary** laptop-friendly LoRA SFT, 15-source mix, merged checkpoints |
 | SFT — reference | `sft/sft.py` | Original full-parameter SFT used for v1–v3 A100 runs |
-| SFT data | `sft/` | Data builders, teacher generators, verification, ChatML tokenization, tool runtime |
+| SFT data | [sft/](sft/README.md) | Data builders, teacher generators, verification, ChatML tokenization, tool runtime |
 | RL / DPO | `build_dpo_data.py`, `train_dpo.py` | Preference-pair construction + DPO, reference = adapters-off policy |
 | Evaluation | `eval_model.py`, `standard_eval.py`, `sft_bench.py`, `make_report.py` | Per-source loss, GSM8K/ARC, deterministic chat bench, reports |
 | Dashboard | `scripts/build_dashboard.py` | Static HTML side-by-side validation dashboard |
-| Serving | `sparky/` | Flask chatbot, tool loop, inference model, bench, leaderboard, voice mode |
+| Serving | [sparky/](sparky/README.md) | Flask chatbot, tool loop, inference model, bench, leaderboard, voice mode |
 | Utilities | `lora.py`, `data_utils.py`, `chat_template.py`, `tools_runtime.py` | Shared training/inference primitives |
 | Orchestration | `scripts/` | rclone pull, overnight SFT+DPO pipeline, checkpoint push, model soup |
 | Tests | `tests/` | Data builders, tokenization, tool loop, checkpoint/training logic |
@@ -53,7 +59,7 @@ same 15-source validation sets and the same deterministic 49-item chat bench.
 | Reference v3 full-FT (A100) | **1.150** | 70% | 10.0% | **30.5%** |
 
 DPO validation preference accuracy: **0.669**. SFT improved **15/15** validation
-sources over the pretrain base. Full details: `reports/MORNING_REPORT.md`.
+sources over the pretrain base. Full details: [docs/RESULTS.md](docs/RESULTS.md).
 
 ## Quickstart
 
@@ -69,7 +75,12 @@ pip install -r requirements-serving.txt
 
 Create a gitignored `.env` only if you use data-generation teachers, the live
 search tool, or the chatbot: `DEEPSEEK_API_KEY`, `BRAVE_API_KEY`,
-`NGROK_AUTHTOKEN`, etc. Never commit it.
+`NGROK_AUTHTOKEN`, etc. Copy `.env.example` and never commit the populated file.
+The legacy trainer reads the repository root `.env`; the chatbot reads
+`sparky/.env` and falls back to the root file.
+
+System prerequisites for the full pipeline: **rclone** for Drive artifacts and
+**ffmpeg** for media/video. The video project additionally uses Node.js/npx.
 
 ### 2. Data directory
 
@@ -77,8 +88,16 @@ All trainers share one data root. The new pipeline uses `SYNAPSENEW_DIR`; the
 imported legacy scripts also accept `SYNAPSE_DIR`.
 
 ```bash
-export SYNAPSENEW_DIR=/media/alfonso/shared/synapsenew
+# no default account is assumed: point this at your own workspace
+export SYNAPSENEW_DIR="$HOME/synapsenew"
 export SYNAPSE_DIR="$SYNAPSENEW_DIR"
+```
+
+The rclone commands below require an authenticated remote named `gdrive` with
+access to the author-provided workspace:
+
+```bash
+rclone config   # create remote "gdrive" if needed
 ```
 
 Pull the SFT/checkpoint assets:
@@ -159,13 +178,21 @@ python make_report.py
 python scripts/build_dashboard.py
 ```
 
-The reference-era harnesses are under `sparky/`:
-`sft_bench.py`, `eval_tool_use.py`, `sparky_leaderboard.py`, and the bulk
-checkpoint dashboard. See `sparky/README.md`.
+The reference-era harnesses live under `sparky/` (`sft_bench.py`,
+`eval_dashboard.py`, `eval_drive_checkpoints.py`, `sparky_leaderboard.py`) and
+`sft/eval_tool_use.py`; the root `sft_bench.py` is the current deterministic
+bench. See [sparky/README.md](sparky/README.md).
 
 ### 7. Serve
 
 ```bash
+# serve the new DPO checkpoint on a local GPU
+python sparky/sparky_chatbot.py \
+  --ckpt "$SYNAPSENEW_DIR/checkpoints/dpo_best.pth" \
+  --tokenizer "$SYNAPSENEW_DIR/data/tokenizer_out/tokenizer.json" \
+  --no-download --no-ngrok
+
+# or the SFT checkpoint
 python sparky/sparky_chatbot.py --help
 ```
 
@@ -175,26 +202,21 @@ point is `sparky/sparky_chatbot_colab.ipynb`.
 
 ## Google Drive layout
 
-The full workspace lives under `gdrive:synapse/` (about 1.9 TB):
+The external workspace is private and is not required to read the repository:
 
-| Path | Contents |
+| Location | Contents |
 |---|---|
-| `datasets_pretrain/` | 23,064 files, ~577 GB raw pretraining corpora |
-| `datasets_sft/` | 38 files, ~256 MB raw SFT sources |
-| `tokenizer_out/` | tokenizer.json + eval samples, ~1.9 GB |
-| `token_shards/` | 1,621 files, ~329 GB per-source token shards |
-| `token_shards_merged/` | 2,771 files, ~329 GB merged uint16 shards |
-| `sft_tokenized/` and `sft_tokenized_v{1,2}_*/` | 15-source v3 data + historical tokenizations, ~2.1 GB |
-| `checkpoints/` | 23 pretraining/versioned checkpoints, ~513 GB |
-| `sft_checkpoints/` | 26 SFT/DPO checkpoints and archives, ~134 GB |
-| `manifests/` | tokenization IDs, data registries, training manifests |
+| `gdrive:synapse/datasets_pretrain/` | raw pretraining corpora |
+| `gdrive:synapse/datasets_sft/` | raw SFT sources |
+| `gdrive:synapse/tokenizer_out/` | tokenizer files |
+| `gdrive:synapse/token_shards{,_merged}/` | per-source and merged uint16 shards |
+| `gdrive:synapse/sft_tokenized*/` | ChatML-tokenized SFT data |
+| `gdrive:synapse/checkpoints/` | pretraining checkpoints |
+| `gdrive:synapse/sft_checkpoints/` | reference SFT/DPO checkpoints and model cards |
+| `gdrive:synapsenew/` | this pipeline’s checkpoints, reports, and explainer video |
 
-`gdrive:synapsenew/` holds the new pipeline's artifacts (~32.5 GB):
-`checkpoints/` (SFT, DPO, big-LoRA, adapters), `reports/` (evals, dashboard,
-samples, model cards), and `video/` (the explainer MP4).
-
-The separately named `synapse (Copy 2)` Drive folder is a historical duplicate,
-not part of the live pipeline.
+The helper scripts in `scripts/` assume that layout. If you do not have access,
+download the public corpora and rebuild the tokenizer/shards/checkpoints.
 
 ## Design principles
 
@@ -211,14 +233,22 @@ not part of the live pipeline.
 - **Artifacts survive runs.** Checkpoints, manifests, eval results, and model
   cards are versioned on Google Drive.
 
+## Tests
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py'
+```
+
+The suite covers data builders, tokenization, the tool loop, and training
+logic; live-data/API tests skip automatically.
+
 ## Not in Git
 
 Secrets (`.env`), local virtualenvs, generated corpora/token shards, and model
-checkpoints stay out of the repository. The excluded private data-generation
-pipelines (`download_pretrain_books/`, `download_pretrain_others/`,
-`common_pretrain_text_processing/`) are noted in `sft/README.md`; the public
-pipeline in this repo is runnable without them except for those optional
-teachers.
+checkpoints stay out of the repository. Optional private data-generation
+pipelines and some proprietary corpora are not included. The public pipeline is
+runnable with the public `download_pretrain_data/` and `tokenize/` stages; the
+private teacher-based generators require your own API credentials.
 
 ## Credits
 

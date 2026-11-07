@@ -31,7 +31,22 @@ definition, and the evaluation harnesses that gate each release.
 
 ## Checkpoints (Drive layout)
 
-`gdrive:synapse/sft_checkpoints/v{N}_<sources>/` — each shipped generation is
-archived with `sft_best.pth` (the ship artifact), epoch snapshots, its training
-manifest, data registry, eval results, and a `MODEL_CARD.md`. The chatbot serves
-the current generation's `sft_best.pth`; older generations remain loadable.
+`gdrive:synapse/sft_checkpoints/v{N}_<sources>/` contains the original v1–v3
+full-FT generations, each archived with `sft_best.pth`, epoch snapshots, its
+training manifest, data registry, eval results, and a `MODEL_CARD.md`.
+
+The improved pipeline’s checkpoints are under
+`gdrive:synapsenew/checkpoints/` (`sft_best.pth`, `dpo_best.pth`,
+`sft_best_biglora.pth`, adapters).
+
+The chatbot defaults to the original pretrain/SFT variants for backward
+compatibility. To serve a synapsenew checkpoint explicitly:
+
+```bash
+python sparky_chatbot.py \
+  --ckpt "$SYNAPSENEW_DIR/checkpoints/dpo_best.pth" \
+  --tokenizer "$SYNAPSENEW_DIR/data/tokenizer_out/tokenizer.json" \
+  --no-download --no-ngrok
+```
+
+Older generations remain loadable with `--variant`.
