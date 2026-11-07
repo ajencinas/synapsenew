@@ -1,4 +1,11 @@
-# synapsenew runtime requirements (laptop venv: torch 2.14.0+cu130)
+# Core training/evaluation dependencies for the full Synapse pipeline.
+# The laptop training recipe was validated with torch 2.14+cu130.
 torch>=2.7
-tokenizers>=0.20
 numpy
+tqdm
+tokenizers>=0.20
+datasets>=2.18
+openai>=1.0.0
+python-dotenv>=1.0.0
+pymupdf>=1.23.0
+requests>=2.31

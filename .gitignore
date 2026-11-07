@@ -1,15 +1,45 @@
+# Secrets / local environments
+.env
+.env.*
+rclone.conf
+.venv/
+venv/
+__pycache__/
+*.pyc
+
 # checkpoints, data, logs, reports stay out of git (they live in $SYNAPSENEW_DIR
 # / Google Drive; the repo keeps symlinks to the workspace for convenience)
 *.pth
 *.pt
 *.partial
-__pycache__/
-*.pyc
+*.bin
+*.npy
+*.npz
+*.parquet
+*.arrow
+*.safetensors
+*.tar
+*.tar.gz
+*.zip
 /data
 /checkpoints
 /logs
 /reports
 /results
+
+# Imported pipeline data roots (when they live inside the repo)
+/datasets_pretrain
+/datasets_sft
+/token_shards
+/token_shards_merged
+/tokenizer_out
+/sft_tokenized
+/sft_tokenized_v1_7source
+/sft_tokenized_v2_12source
+/sft_checkpoints
+/sparky/sparky_data
+/sparky/results
+/sft/outputs
 .pytest_cache/
 
 # rendered video + decoded validation frames (source stays in git)

@@ -1,0 +1,6 @@
+# Optional dependencies for the Flask chatbot, Streamlit dashboards, and
+# Open LLM Leaderboard evaluation harness.
+flask>=3.0
+streamlit>=1.30
+pandas>=2.0
+lm_eval>=0.4

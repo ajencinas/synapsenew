@@ -33,5 +33,8 @@ rclone copy gdrive:synapse/sft_checkpoints/v3_15source "$WS/reports/ref_v3/" \
   --include "MODEL_CARD.md" --include "sft_training_latest.json" \
   --include "bench/**" --transfers 4 || true
 
+log "linking legacy and new workspace layouts…"
+bash "$(dirname "$0")/link_workspace_layout.sh"
+
 log "done. du:"
 du -sh "$WS"/data "$WS"/checkpoints
